@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "TopClients";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div role="main" ng-controller="salesReportController as SR" ng-init="initTopClient()">
+
+    <div class="widget-box">
+        <div class="widget-title">
+            <span class="icon"><i class="icon-calendar"></i></span>
+            <h5>Date Range</h5>
+        </div>
+
+        <div class="widget-title">
+            <div class="form-group">
+                <input type="date" ng-model="SR.Search.StartDate" />
+                <input type="date" ng-model="SR.Search.EndDate" />
+                <button type="button" class="btn btn-primary btn-xs" ng-click="SearchTopClient(SR.Search)">Search</button>
+            </div>
+        </div>
+    </div>
+    <div class="widget-box">
+        <div class="widget-title">
+            <span class="icon"></span>
+            <h5>Top 10 Clients</h5>
+        </div>
+
+        <div class="widget-content">
+            <table class="display" id="topClientTable" style="width:100%">
+                <thead>
+                    <tr>
+                        <th style="width:50px;">Rank</th>
+                        <th>Client Name</th>
+                        <th style="width:100px;">No of Activities</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="top in SR.TopClients">
+                        <td>{{top.No}}</td>
+                        <td>{{top.ClientName}}</td>
+                        <td>{{top.Count}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

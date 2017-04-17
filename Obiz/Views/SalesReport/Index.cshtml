@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid" ng-controller="salesReportController as rpt" ng-init="init()">
+    <h3>Activity Report</h3>
+
+    <a type="button" class="btn btn-success" href="/SalesReport/SalesReport" 
+            ng-show="rpt.SalesHeader.Priviledge.Add == 'Y'"
+            ng-click="ClearModalFields()">New Sales Report</a>
+
+    <div class="widget-box">
+        <div class="widget-title" data-toggle="modal" data-target="#searchModal">
+            <a><span class="icon"> <i class="icon-search"></i> </span></a>
+            <h5>Search Parameters <small>{{rpt.ShowSearch.ClientName}} {{rpt.ShowSearch.StartDate}} {{rpt.ShowSearch.EndDate}}</small></h5>
+        </div>
+        <div class="widget-content">
+            <table class="display" id="activityReportTable" style="table-layout:auto">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Account Manager</th>
+                        <th>Client Name</th>
+                        <th>Date</th>
+                        <th>Category|Type of Activity</th>
+                        <th>Agenda/Issues/Concerns</th>
+                        <th>Scope/Action</th>
+                        <th>Status|Due Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="sales in rpt.SalesHeader" on-finish-render-sales="ngRepeatFinished">
+                        <td>
+                            <button type="button" class="btn-info"ng-click="Redirection(sales.ID)"
+                                    style="width:30px;">
+                                <i class="icon-eye-open" ng-if="rpt.CurrentUser.ID != sales.CreatedBy && rpt.SalesHeader.Priviledge.Override != 'Y'"></i>      
+                                <i class="icon-pencil" ng-if="(rpt.CurrentUser.ID == sales.CreatedBy && rpt.SalesHeader.Priviledge.Edit == 'Y')
+                                    || rpt.SalesHeader.Priviledge.Override == 'Y'"></i>                     
+                            </button>
+                        </td>
+                        <td>{{sales.AccountManager}}</td>
+                        <td>{{sales.ClientName}}</td>
+                        <td>{{sales.ShowDate}}</td>
+                        <td>{{sales.ShowCategory}} {{sales.ShowTypeOfActivity}}</td>
+                        <td>{{sales.AgendaIssueConcerns}}</td>
+                        <td>{{sales.BCDDeliverables}}</td>
+                        <td>{{sales.ShowStatus}} {{sales.ShowDueDate}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal fade" id="searchModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Search Parameter</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Client Name</label>
+                        <select id="searchClientName" style="width:100%" ng-model="vm.Search.Client" ng-options="item1.ID as item1.ClientName for item1 in rpt.ClientDropDown"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" ng-model="vm.Search.StartDate" id="searchStartDate"/>
+                        <input type="date" ng-model="vm.Search.EndDate" id="searchEndDate" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Deadline</label>
+                        <input type="date" ng-model="vm.Search.StartDeadline" id="searchStartDeadline" />
+                        <input type="date" ng-model="vm.Search.EndDeadline" id="searchEndDeadline" />
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-default" ng-click="Search(vm.Search)">Search</button>
+                        <button class="btn btn-warning" ng-click="ClearSearch()">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $("#Document").ready(function () {
+
+    });
+</script>

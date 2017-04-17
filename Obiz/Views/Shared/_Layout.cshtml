@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Obiz</title>
+    @Scripts.Render("~/bundles/scripts")
+    @Scripts.Render("~/bundles/angular")
+    @Styles.Render("~/content/css")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
+</head>
+<body ng-controller="mainController as vm" ng-init="init()">
+    <div growl class="fading"></div>
+    <!--Header-part-->
+    <div id="header"> 
+        <h1></h1>
+    </div>
+    <!--close-Header-part--> 
+
+    <!--top-Header-menu-->
+    <div id="user-nav" class="navbar navbar-inverse">
+        <ul class="nav">
+            <li class="dropdown" id="profile-messages">
+                <a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text">Welcome {{vm.CurrentUser.FirstName}} {{vm.CurrentUser.LastName}}</span></a>
+            </li>
+            <li class=""><a title=""  ng-click="Logout()"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>
+        </ul>
+    </div>
+    <!--close-top-Header-menu-->
+
+    <!--sidebar-menu-->
+    <div id="sidebar">
+        <a href="#" class="visible-phone"><i class="icon-reorder"></i> </a>
+        <ul>
+            <li><a href="/Home/Dashboard"><i class="icon icon-home"></i> <span>Dashboard</span></a></li>
+            <li ng-show="vm.Menu.ActivityReport == 'Y' || vm.CurrentUser.Department == 'IT'"><a href="/SalesReport/Index"><i class="icon icon-th"></i> <span>Activity Report</span></a></li>
+            @*<li><a href="/ServiceIssueLog/Index"><i class="icon icon-exclamation-sign"></i><span>Service Issue Log</span></a></li>*@
+            <li class="submenu" ng-show="vm.Menu.AEFUR == 'Y' || vm.CurrentUser.Department == 'IT'"><a href="#"><i class="icon icon-plane"></i><span>AEFUR</span></a>
+                <ul>
+                    <li><a href="/AEFUR/UnbilledMonitoring"><span>Unbilled Monitoring</span></a></li>
+                </ul>
+            </li>
+            <li class="submenu" ng-show="vm.Menu.Report == 'Y' || vm.CurrentUser.Department == 'IT'"><a href="#"><i class="icon icon-dashboard"></i><span>Reports</span></a>
+                <ul>
+                    <li ng-show="vm.Menu.ActivityReportCharts == 'Y' || vm.CurrentUser.Department == 'IT'"><a href="/SalesReport/Reports">Activity Report</a></li>
+                    <li><a href="/AEFUR/ReportMenu">AEFUR</a></li>
+                </ul>
+            </li>
+            <li ng-show="vm.CurrentUser.Department == 'IT'"><a href="/Admin/UserAccount"><i class="icon icon-group"></i> <span>Users</span></a></li>
+        </ul>
+    </div>
+    <!--sidebar-menu-->
+    <div id="content">
+        <div id="content-header">
+            <div id="breadcrumb"></div>
+        </div>
+
+        <div class="container-fluid">
+            @RenderBody()
+        </div>
+    </div>
+
+        <!--Footer-part-->
+        <div class="row-fluid">
+            <div id="footer" class="span12"> 2017 &copy; Obiz v1.3 by Philscan Travel and Tours Inc.</div>
+        </div>
+
+        <!--end-Footer-part-->
+
+    <script>
+        $(document).ready(function () {
+            $(".select2_single").select2({
+                placeholder: "Please Select",
+                allowClear: true,
+            });
+        });
+    </script>
+
+</body>
+</html>

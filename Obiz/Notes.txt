@@ -1,0 +1,23 @@
+﻿***Type of Activity***
+A = Concall with BCD RAM or BCD GAM
+B = Coordination - Management - Adhoc Meetings
+C = Internal Training/Briefing with Servicing Team
+D = Preparation for Travel Forums - Road Shows
+E = Preparation for Proposal - Business Review
+F = Trainings (Product - Service - Techincal - Soft Skills)
+G = Overseas Meetings
+H = Concall with Client or Partner Supplier/Vendor
+I = Business Review
+J = Travel Forum - Travel Seminar - Road Show
+K = Sales Visit - Meeting with Clients
+L = Joint Sales Call with partner suppliers
+M = Escort/Familiarization Trips
+
+***Module List for Priviledge Creation***
+-Report
+-SalesReport
+-ServiceIssueLog
+-SalesReport
+-SalesReport/ActivityReportSummary
+-SalesReport/PercentageActivity
+-SalesReport/TopClients

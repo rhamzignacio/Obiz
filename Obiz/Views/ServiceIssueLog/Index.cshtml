@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "ServiceIssue";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid" ng-controller="serviceIssueController as logs" ng-init="Init()">
+    <h3>Service Issue Logs</h3>
+
+    <a class="btn btn-success" ng-show="logs.Priviledge.ShowAdd == 'Y'" href="/ServiceIssueLog/OpenIssueLog?">New Service Issue</a>
+
+    <div class="widget-box">
+        <div class="widget-title">
+
+        </div>
+
+        <div class="widget-content nopadding">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Report Date</th>
+                        <th>Incident Date</th>
+                        <th>Name of Client</th>
+                        <th>Name of Booker</th>
+                        <th>Handling TC</th>
+                        <th>Department</th>
+                        <th>Summary</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="gradeA" ng-repeat="item in logs.ServiceIssueLogs">
+                        <td>
+                            <button class="btn-info" ng-class="" ng-click="Redirection(item.ID)"
+                                    style="width:30px;">
+                                <i class="icon-eye-open" ng-show="vm.CurrentUser.ID != item.ReportedBy && 
+                                   logs.Priviledge.ShowOverride != 'Y'"></i>
+                                <i class="icon-pencil" ng-show="vm.CurrentUser.ID == item.ReportedBy ||
+                                   logs.Priviledge.ShowOverride == 'Y'"></i>
+                            </button>
+                        </td>
+                        <td>{{item.ShowReportDate}}</td>
+                        <td>{{item.ShowIncidentDate}}</td>
+                        <td>{{item.ClientName}}</td>
+                        <td>{{item.BookerName}}</td>
+                        <td>{{item.HandlingTCName}}</td>
+                        <td>{{item.Department}}</td>
+                        <td>{{item.SummaryNatureOfService}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> 
+    </div>
+</div>

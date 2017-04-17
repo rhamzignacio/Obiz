@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Reports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div ng-controller="salesReportController as SR" ng-init="initReportPriv()">
+    <div class="container-fluid">
+        <div class="quick-actions_homepage">
+            <ul class="quick-actions">
+                <li class="bg_lb" ng-show="SR.Priviledge.activityReportPriviledge.View == 'Y' || 
+                    vm.CurrentUser.Department == 'IT'"><a href="/SalesReport/ActivityReportSummary"><i class="icon-bar-chart"></i>
+                    Total Activity per AM </a></li>
+
+                <li class="bg_ls" ng-show="SR.Priviledge.percentageActivityPriviledge.View == 'Y' ||
+                    vm.CurrentUser.Department == 'IT'"><a href="/SalesReport/PercentageTypeOfActivity"><i class="icon-caret-down"></i>
+                    Type Of Activity</a></li>
+
+                <li class="bg_lo" ng-show="SR.Priviledge.topClientPriviledge.View == 'Y' ||
+                    vm.CurrentUser.Department == 'IT'"><a href="/SalesReport/TopClients"><i class="icon-user"></i>
+                    Top 10 Clients</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

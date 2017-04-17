@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<div class="container-fluid">
+    <div class="quick-actions_homepage">
+        <ul class="quick-actions">
+            <li class="bg_lb"> <a href="/Home/Dashboard"> <i class="icon-home"></i>Dashboard </a> </li>
+            <li class="bg_lg" ng-show="vm.Menu.ActivityReport == 'Y' || vm.CurrentUser.Department == 'IT'"> <a href="/SalesReport/Index"> <i class="icon-th"></i> Activity Report</a> </li>
+            <li class="bg_lo" ng-show="vm.CurrentUser.Department == 'IT'"><a href="/Admin/UserAccount"><i class="icon-group"></i>Users</a></li>
+        </ul>
+    </div>
+</div>

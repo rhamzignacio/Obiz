@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "SalesReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{ 
+
+}
+<div class="container-fluid" ng-controller="salesReportController as rpt" ng-init="initSalesReport()">
+    <h3>Activity Report</h3>
+
+    <button type="button" class="btn btn-success" style="width:120px;" ng-click="SaveSales(rpt.SalesReport)"
+            ng-show="(vm.CurrentUser.ID == rpt.SalesReport.CreatedBy && rpt.SalesReport.Priviledge.Edit == 'Y' && rpt.SalesReport.ID != '')
+                            || rpt.SalesReport.Priviledge.Override == 'Y'
+                            || (rpt.SalesReport.Priviledge.ShowAdd == 'Y' && rpt.SalesReport.ID == '')">
+        <span ng-show="rpt.SalesReport.ID == null || rpt.SalesReport.ID == ''">Save</span>
+        <span ng-show="rpt.SalesReport.ID != null && rpt.SalesReport.ID != ''">Update</span>
+    </button>
+
+    <a type="button" class="btn btn-warning" style="width:100px;" href="/SalesReport/Index">Back to List</a>
+
+    <div class="form-group">
+        <label>Account Manager</label>
+        <select class="form-modal select2_single" id="AccountManager" style="width:100%" ng-model="rpt.SalesReport.UserID" ng-options="item.ID as item.FullName for item in rpt.AccountManagerDropDown"></select>
+    </div>
+
+    <div class="form-group">
+        <label>Client</label>
+        <select class="form-modal select2_single" style="width:100%" ng-model="rpt.SalesReport.ClientID" ng-options="item1.ID as item1.ClientName for item1 in rpt.ClientDropDown"></select>
+    </div>
+
+    <div class="form-group">
+        <label>Date</label>
+        <input class="form-modal" type="date" ng-model="rpt.SalesReport.Date" />
+    </div>
+
+    <div class="form-group">
+        <label>SLA Involvement?</label>
+        <div class="controls">
+            <label>
+                <input type="radio" name="sla" value="Y" ng-model="rpt.SalesReport.SLA" id="SLAYes"/>
+                Yes
+            </label>
+            <label>
+                <input type="radio" name="sla" value="N" ng-model="rpt.SalesReport.SLA" id="SLANo"/>
+                No
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Type of Activity</label>
+        <select class="form-modal select2_single" style="width:100%" ng-model="rpt.SalesReport.TypeOfActivity" ng-options="item.value as item.label for item in TypeOfActivityDropDown"></select>
+    </div>
+
+    <div class="form-group">
+        <label>Category</label>
+        <select class="form-modal select2_single" style="width:100%" ng-model="rpt.SalesReport.Category" ng-options="item.value as item.label for item in CategoryDropDown"></select>
+    </div>
+
+    <div class="form-group">
+        <label>Status</label>
+        <select class="form-modal select2_single" style="width:100%" ng-model="rpt.SalesReport.Status" ng-options="item.value as item.label for item in StatusDropDown"></select>
+    </div>
+
+    <div class="form-group">
+        <label>Agenda / Issue / Concern</label>
+        <textarea class="form-modal" ng-model="rpt.SalesReport.AgendaIssueConcerns"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Scope / Action</label>
+        <textarea class="form-modal" ng-model="rpt.SalesReport.ScopeAction"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Company Update</label>
+        <textarea class="form-modal" ng-model="rpt.SalesReport.CompanyUpdate"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Remarks</label>
+        <textarea class="form-modal" ng-model="rpt.SalesReport.Remarks"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>BCD Deliverables</label>
+        <textarea class="form-modal" ng-model="rpt.SalesReport.BCDDeliverables"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>DueDate</label>
+        <input class="form-modal" type="date" ng-model="rpt.SalesReport.DueDate" />
+    </div>
+</div>
+

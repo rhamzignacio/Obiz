@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewBag.Title = "ServiceIssueLog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid" ng-controller="serviceIssueController as srvc" ng-init="initOpenServiceIssue()">
+    <h2>Service Issue Log</h2>
+
+    <button type="button" class="btn btn-success" style="width:120px;" ng-click="SaveServiceIssue(srvc.ServiceIssueLog)"
+            ng-show="(vm.CurrentUser.ID == srvc.ServiceIssueLog.CreatedBy && srvc.Priviledge.ShowEdit =='Y'
+            && srvc.ServiceIssueLog.ID != '00000000-0000-0000-0000-000000000000') || srvc.Priviledge.ShowOverride == 'Y'
+            || (srvc.Priviledge.ShowAdd == 'Y' && srvc.ServiceIssueLog.ID =='00000000-0000-0000-0000-000000000000')">
+        <span ng-show="srvc.ServiceIssueLog.ID == '00000000-0000-0000-0000-000000000000' || srvc.ServiceIssueLog.ID == ''">Save</span>
+        <span ng-show="srvc.ServiceIssueLog.ID != '00000000-0000-0000-0000-000000000000' && srvc.ServiceIssueLog.ID != ''">Update</span>
+    </button>
+
+    <a class="btn btn-warning" style="width:100px;" href="/ServiceIssueLog/Index">Back to List</a>
+
+    <div class="form-group">
+        <label>Report Date</label>
+        <input type="date" class="form-modal" ng-model="srvc.ServiceIssueLog.ReportDate" disabled="disabled" />
+    </div>
+
+    <div class="form-group">
+        <label>Incident Date</label>
+        <input type="date" class="form-modal" ng-model="srvc.ServiceIssueLog.IncidentDate" />
+    </div>
+
+    <div class="form-group">
+        <label>Reported By</label>
+        <input type="text" class="form-modal" ng-show="srvc.ServiceIssueLog.ID == '00000000-0000-0000-0000-000000000000' " value="{{vm.CurrentUser.FirstName}} {{vm.CurrentUser.LastName}}" disabled="disabled"/>
+        <input type="text" class="form-modal"  ng-show="srvc.ServiceIssueLog.ID != '00000000-0000-0000-0000-000000000000' " ng-model="srvc.ServiceIssueLog.ReportedByName" disabled="disabled"/>
+    </div>
+
+    <div class="form-group">
+        <label>Client Name</label>
+        <select class="form-modal select2_single" style="100%" ng-model="srvc.ServiceIssueLog.ClientID"
+                ng-options="item.ID as item.ClientName for item in srvc.ClientDropDown">
+        </select>
+    </div>
+
+    <div class="form_group">
+        <label>Booker Name</label>
+        <textarea class="form-modal" rows="2" ng-model="srvc.ServiceIssueLog.BookerName"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Total Passenger</label>
+        <input type="text" class="form-modal" ng-model="srvc.ServiceIssueLog.TotalPax" />
+    </div>
+
+    <div class="form-group">
+        <label>Passenger Name(s)</label>
+        <textarea class="form-modal" rows="3" ng-model="srvc.ServiceIssueLog.PaxName"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Handling TC</label>
+        <select class="form-modal select2_single" style="100%" ng-model="srvc.ServiceIssueLog.HandlingTCID"
+                ng-options="item.ID as item.FullName for item in srvc.UserDropDown">
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Department</label>
+        <select class="form-modal select2_single" style="100%" ng-model="srvc.ServiceIssueLog.Department"
+                ng-options="item.value as item.label for item in Department">
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Summary / Nature of Service Issue</label>
+        <textarea class="form-modal" rows="4" ng-model="srvc.ServiceIssueLog.SummaryNatureOfService"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Resolution</label>
+        <textarea class="form-modal" rows="4" ng-model="srvc.ServiceIssueLog.Resolution"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Resolve Date</label>
+        <input type="date" class="form-modal" ng-model="srvc.ServiceIssueLog.ResolveDate" />
+    </div>
+
+    <div class="form-group">
+        <label>Was IR Issued?</label>
+        <select class="form-modal select2_single" style="100%" ng-model="srvc.ServiceIssueLog.WasIRIssued"
+                ng-options="item.value as item.label for item in Bool">
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Was MEMO Issued?</label>
+        <select class="form-modal select2_single" style="100%" ng-model="srvc.ServiceIssueLog.WasMemoIssued"
+                ng-options="item.value as item.label for item in Bool">
+        </select>
+    </div>
+</div>
+

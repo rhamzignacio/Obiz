@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewBag.Title = "UnbilledMonitoring";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid" ng-controller="aefurController as aefur" ng-init="initUnbilled()">
+    <div id="loading" style="display:none">
+        <img src="~/Src/Images/ring-alt.gif" />
+        <br />
+        <br />
+        Loading, Please wait. . .
+    </div>
+        <!--Unbilled Table--> 
+        <div class="widget-box" id="unbilledBox" style="display:none">
+            <div class="widget-title" style="background-color:orange;">
+                <h5>AEFUR - Unbilled</h5>
+            </div>
+
+            <div class="widget-content">
+                <table class="display" id="aefurUnbilledTable" style="table-layout:auto">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Date</th>
+                            <th>Record Locator</th>
+                            <th>Ticket No</th>
+                            <th>Passenger Name</th>
+                            <th>Client Name</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="unbilled in aefur.Unbilled" on-finish-render-unbilled="ngRepeatFinished">
+                            <td>
+                                <button class="btn-primary" style="width:30px;" ng-click="AssignForDelete(unbilled)" ng-show="unbilled.Status == 'Y'"
+                                        data-target="#unbilledSubmitModal" data-toggle="modal"><i class="icon icon-flag"></i></button>
+                            </td>
+                            <td>{{unbilled.ShowTransactionDate}}</td>
+                            <td>{{unbilled.RecordLocator}}</td>
+                            <td>{{unbilled.TicketNumber}}</td>
+                            <td>{{unbilled.PassengerName}}</td>
+                            <td>{{unbilled.ProfileName}}</td>
+                            <td>{{unbilled.CurrencyCode}} {{unbilled.GrossAmount}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--/Unbilled Table-->
+        <!--NoRecord Table-->
+        <div class="widget-box" id="noRecordBox" style="display:none">
+            <div class="widget-title" style="background-color:dodgerblue">
+                <h5>AEFUR - No Record</h5>
+            </div>
+
+            <div class="widget-content">
+                <table class="display" id="aefurNoRecordTable" style="table-layout:auto">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Record Locator</th>
+                            <th>Ticket No</th>
+                            <th>Agent</th>
+                            <th>Passenger Name</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="noRecord in aefur.NoRecord" on-finish-render-norecord="ngRepeatFinished">
+                            <td>{{noRecord.Date}}</td>
+                            <td>{{noRecord.RecordLocator}}</td>
+                            <td>{{noRecord.TicketNumber}}</td>
+                            <td>{{noRecord.AgentCode}} {{noRecord.AgentName}}</td>
+                            <td>{{noRecord.PassengerName}}</td>
+                            <td>{{noRecord.CurrencyCode}} {{noRecord.BookingAmount}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--/NoRecord Table-->
+
+    <!--Delete Modal-->
+    <div class="modal fade" id="unbilledSubmitModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Are you sure you want to Submit this record?</h4>
+                </div>
+
+                <div class="modal-body">
+                    <button class="btn btn-success" data-dismiss="modal" ng-click="AEFURTick()">Yes</button>
+                    <button class="btn btn-default" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/Delete Modal-->
+</div>

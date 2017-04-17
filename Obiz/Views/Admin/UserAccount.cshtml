@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "UserAccount";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid" ng-controller="adminController as adm" ng-init="initUser()">
+    <h3>User Accounts</h3>
+
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#userModal">
+        <span>New User</span>
+    </button>
+    <div class="widget-box">
+
+
+        <div class="widget-content nopadding">
+            <table class="display" id="userTable">
+                <thead>
+                    <tr>
+                        <th style="width:80px;"></th>
+                        <th>Username</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                        <tr ng-repeat="user in adm.Users"  on-finish-render="ngRepeatFinished">
+                            <td>
+                                <button class="btn-warning" style="width:30px;">
+                                    <i class="icon-lock" ng-show="user.Status == 'Y'"></i>
+                                    <i class="icon-unlock" ng-show="user.Status == 'N'"></i>
+                                </button>
+                                <button class="btn-info" style="width:30px;">
+                                    <i class="icon-eye-open"></i>
+                                </button>
+                            </td>
+                            <td class="sorting_1">{{user.Username}}</td>
+                            <td>{{user.FirstName}} {{user.LastName}}</td>
+                            <td>{{user.Department}}</td>
+                        </tr>
+                </tbody>
+            </table>
+
+        </div> 
+    </div>
+</div>
+
+<div class="modal fade" id="userModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">User Account</h4>
+            </div>
+
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#Document").ready(function () {
+    
+    });
+</script>

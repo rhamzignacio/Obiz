@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "AEFURUnbilledReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div role="main" ng-controller="aefurController as aefur" ng-init="initAEFURUnbilledReport()">
+    <h2>AEFUR - Unbilled Report</h2>
+
+    <div class="widget-box">
+        <div class="widget-title">
+            <h5>Business and Leisure</h5>
+        </div>
+
+        <div class="widget-content">
+            <table class="display" id="BLDUnbilledTable" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Agent Name</th>
+                        <th>Count</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="ub in aefur.UnbilledReport | filter: {Department: 'BL'}">
+                        <td>{{ub.TCName}}</td>
+                        <td>{{ub.Count}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="widget-box">
+        <div class="widget-title">
+            <h5>Marine</h5>
+        </div>
+
+        <div class="widget-content">
+            <table class="display" id="MMUnbilledTable" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Agent Name</th>
+                        <th>Count</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="ub in aefur.UnbilledReport | filter: {Department: 'MM'}">
+                        <td>{{ub.TCName}}</td>
+                        <td>{{ub.Count}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="widget-box">
+        <div class="widget-title">
+            <h5>Mice</h5>
+        </div>
+
+        <div class="widget-content">
+            <table class="display" id="MCUnbilledTable" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Agent Name</th>
+                        <th>Count</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="ub in aefur.UnbilledReport | filter: {Department: 'MC'}">
+                        <td>{{ub.TCName}}</td>
+                        <td>{{ub.Count}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

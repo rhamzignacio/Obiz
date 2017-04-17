@@ -1,0 +1,55 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en" ng-app="login">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Obiz</title>
+
+    @Scripts.Render("~/bundles/scripts")
+    @Styles.Render("~/content/login")
+    @Scripts.Render("~/bundles/angular")
+</head>
+
+<body ng-controller="loginController as vm">
+    <div>
+        <div growl class="fading"></div>
+        <div id="loginbox">
+
+            <form id="loginform" class="form-vertical">
+                <div class="control-group normal_text">
+                    <h3>
+                        <img src="~/Src/Images/Obiz-logo-3.png" alt="Logo"
+                             style="width: 250px;height: 100px;" />
+                    </h3>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="main_input_box">
+                            <span class="add-on bg_ls"><i class="icon-user"> </i></span><input type="text" placeholder="Username" ng-model="vm.User.Username" />
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="main_input_box">
+                            <span class="add-on bg_lo"><i class="icon-lock"></i></span><input type="password" placeholder="Password" ng-model="vm.User.Password" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <span class="pull-left"><a href="#" class="flip-link btn btn-primary" id="to-recover">Forgot Password</a></span>
+                    <span class="pull-right"><button type="button" class="btn btn-success" ng-click="TryLogin(vm.User)">Login</button></span>
+                </div>
+            </form>
+        </div>
+
+        <div class="row-fluid">
+            <div id="footer" class="span12"> 2017 &copy; Obiz v1.3 by Philscan Travel and Tours Inc. </div>
+        </div>
+    </div>
+</body>
+</html>

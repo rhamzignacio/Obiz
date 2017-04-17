@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ObizModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ClientProfile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ClientName" Type="varchar" MaxLength="300" />
+          <Property Name="Status" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="SalesReport">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserID" Type="uniqueidentifier" />
+          <Property Name="ClientID" Type="uniqueidentifier" />
+          <Property Name="Date" Type="date" />
+          <Property Name="TypeOfActivity" Type="varchar" MaxLength="500" />
+          <Property Name="AgendaIssueConcerns" Type="varchar" MaxLength="500" />
+          <Property Name="ScopeAction" Type="varchar(max)" />
+          <Property Name="CompanyUpdate" Type="varchar(max)" />
+          <Property Name="Remarks" Type="varchar(max)" />
+          <Property Name="BCDDeliverables" Type="varchar(max)" />
+          <Property Name="DueDate" Type="date" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" />
+          <Property Name="ModifiedBy" Type="uniqueidentifier" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
+          <Property Name="Category" Type="varchar" MaxLength="50" />
+          <Property Name="SLA" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="ServiceIssueLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ReportDate" Type="datetime" />
+          <Property Name="IncidentDate" Type="datetime" />
+          <Property Name="ReportedBy" Type="uniqueidentifier" />
+          <Property Name="ClientID" Type="uniqueidentifier" />
+          <Property Name="TotalPax" Type="varchar" MaxLength="3" />
+          <Property Name="PaxName" Type="varchar(max)" />
+          <Property Name="HandlingTCID" Type="uniqueidentifier" />
+          <Property Name="Department" Type="varchar" MaxLength="50" />
+          <Property Name="SummaryNatureOfServiceIssue" Type="varchar(max)" />
+          <Property Name="Resolution" Type="varchar(max)" />
+          <Property Name="ResolveDate" Type="datetime" />
+          <Property Name="WasIRIssued" Type="varchar" MaxLength="1" />
+          <Property Name="WasMemoIssued" Type="varchar" MaxLength="1" />
+          <Property Name="BookerName" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="UserAccount">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" />
+          <Property Name="FirstName" Type="varchar" MaxLength="100" />
+          <Property Name="MiddleInitial" Type="varchar" MaxLength="5" />
+          <Property Name="LastName" Type="varchar" MaxLength="100" />
+          <Property Name="Department" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="100" />
+          <Property Name="Status" Type="varchar" MaxLength="1" />
+          <Property Name="AgentCode1" Type="varchar" MaxLength="20" />
+          <Property Name="AgentCode2" Type="varchar" MaxLength="20" />
+          <Property Name="AgentCode3" Type="varchar" MaxLength="20" />
+          <Property Name="PartnerAgent" Type="varchar" MaxLength="20" />
+          <Property Name="CebBizPartner" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="UserPrivilege">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Module" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Add" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="Edit" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="Delete" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="Override" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="View" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <EntityContainer Name="ObizModelStoreContainer">
+          <EntitySet Name="ClientProfile" EntityType="Self.ClientProfile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SalesReport" EntityType="Self.SalesReport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceIssueLog" EntityType="Self.ServiceIssueLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserAccount" EntityType="Self.UserAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserPrivilege" EntityType="Self.UserPrivilege" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ObizModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ObizEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ClientProfile" EntityType="ObizModel.ClientProfile" />
+          <EntitySet Name="SalesReport" EntityType="ObizModel.SalesReport" />
+          <EntitySet Name="ServiceIssueLog" EntityType="ObizModel.ServiceIssueLog" />
+          <EntitySet Name="UserAccount" EntityType="ObizModel.UserAccount" />
+          <EntitySet Name="UserPrivilege" EntityType="ObizModel.UserPrivilege" />
+        </EntityContainer>
+        <EntityType Name="ClientProfile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="ClientName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SalesReport">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="UserID" Type="Guid" />
+          <Property Name="ClientID" Type="Guid" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="TypeOfActivity" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="AgendaIssueConcerns" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ScopeAction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyUpdate" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="BCDDeliverables" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DueDate" Type="DateTime" Precision="0" />
+          <Property Name="CreatedBy" Type="Guid" />
+          <Property Name="ModifiedBy" Type="Guid" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SLA" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ServiceIssueLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="ReportDate" Type="DateTime" Precision="3" />
+          <Property Name="IncidentDate" Type="DateTime" Precision="3" />
+          <Property Name="ReportedBy" Type="Guid" />
+          <Property Name="ClientID" Type="Guid" />
+          <Property Name="TotalPax" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="PaxName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="HandlingTCID" Type="Guid" />
+          <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SummaryNatureOfServiceIssue" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Resolution" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ResolveDate" Type="DateTime" Precision="3" />
+          <Property Name="WasIRIssued" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="WasMemoIssued" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="BookerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="UserAccount">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MiddleInitial" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="AgentCode1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AgentCode2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AgentCode3" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PartnerAgent" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CebBizPartner" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="UserPrivilege">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Module" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="UserID" Type="Guid" Nullable="false" />
+          <Property Name="Add" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Edit" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Delete" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Override" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="View" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ObizModelStoreContainer" CdmEntityContainer="ObizEntities">
+          <EntitySetMapping Name="ClientProfile">
+            <EntityTypeMapping TypeName="ObizModel.ClientProfile">
+              <MappingFragment StoreEntitySet="ClientProfile">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SalesReport">
+            <EntityTypeMapping TypeName="ObizModel.SalesReport">
+              <MappingFragment StoreEntitySet="SalesReport">
+                <ScalarProperty Name="SLA" ColumnName="SLA" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="BCDDeliverables" ColumnName="BCDDeliverables" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="CompanyUpdate" ColumnName="CompanyUpdate" />
+                <ScalarProperty Name="ScopeAction" ColumnName="ScopeAction" />
+                <ScalarProperty Name="AgendaIssueConcerns" ColumnName="AgendaIssueConcerns" />
+                <ScalarProperty Name="TypeOfActivity" ColumnName="TypeOfActivity" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceIssueLog">
+            <EntityTypeMapping TypeName="ObizModel.ServiceIssueLog">
+              <MappingFragment StoreEntitySet="ServiceIssueLog">
+                <ScalarProperty Name="BookerName" ColumnName="BookerName" />
+                <ScalarProperty Name="WasMemoIssued" ColumnName="WasMemoIssued" />
+                <ScalarProperty Name="WasIRIssued" ColumnName="WasIRIssued" />
+                <ScalarProperty Name="ResolveDate" ColumnName="ResolveDate" />
+                <ScalarProperty Name="Resolution" ColumnName="Resolution" />
+                <ScalarProperty Name="SummaryNatureOfServiceIssue" ColumnName="SummaryNatureOfServiceIssue" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="HandlingTCID" ColumnName="HandlingTCID" />
+                <ScalarProperty Name="PaxName" ColumnName="PaxName" />
+                <ScalarProperty Name="TotalPax" ColumnName="TotalPax" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="ReportedBy" ColumnName="ReportedBy" />
+                <ScalarProperty Name="IncidentDate" ColumnName="IncidentDate" />
+                <ScalarProperty Name="ReportDate" ColumnName="ReportDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAccount">
+            <EntityTypeMapping TypeName="ObizModel.UserAccount">
+              <MappingFragment StoreEntitySet="UserAccount">
+                <ScalarProperty Name="CebBizPartner" ColumnName="CebBizPartner" />
+                <ScalarProperty Name="PartnerAgent" ColumnName="PartnerAgent" />
+                <ScalarProperty Name="AgentCode3" ColumnName="AgentCode3" />
+                <ScalarProperty Name="AgentCode2" ColumnName="AgentCode2" />
+                <ScalarProperty Name="AgentCode1" ColumnName="AgentCode1" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleInitial" ColumnName="MiddleInitial" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserPrivilege">
+            <EntityTypeMapping TypeName="ObizModel.UserPrivilege">
+              <MappingFragment StoreEntitySet="UserPrivilege">
+                <ScalarProperty Name="View" ColumnName="View" />
+                <ScalarProperty Name="Override" ColumnName="Override" />
+                <ScalarProperty Name="Delete" ColumnName="Delete" />
+                <ScalarProperty Name="Edit" ColumnName="Edit" />
+                <ScalarProperty Name="Add" ColumnName="Add" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Module" ColumnName="Module" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
