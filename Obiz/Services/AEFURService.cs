@@ -9,7 +9,7 @@ namespace Obiz.Services
 {
     public class AEFURService
     {
-        public static List<AEFURUnbilledReport> GetAEFURUnbilledReport(out string message)
+        public static AEFURUnbilledReport GetAEFURUnbilledReport(out string message)
         {
             try
             {
@@ -19,28 +19,50 @@ namespace Obiz.Services
                 using (var travDB = new TravComEntities())
                 {
                     var unbilled = travDB.AEFURUnbilledCount.ToList();
-                    var user = obizDB.UserAccount.Where(r=>r.Department == "BL" || r.Department == "MM" || r.Department == "MC").ToList();
+                    var user = obizDB.UserAccount.Where(r=>r.Department == "BL" || r.Department == "MM" || r.Department == "MC").OrderBy(r=>r.FirstName).ToList();
 
-                    List<AEFURUnbilledReport> unbilledList = new List<AEFURUnbilledReport>();
+                   AEFURUnbilledReport unbilledList = new AEFURUnbilledReport();
+
+                    unbilledList.BLDUnbilled = new AEFURBarChartModel();
+                    unbilledList.BLDUnbilled.TCName = new List<string>();
+                    unbilledList.BLDUnbilled.Count = new List<int?>();
+
+                    unbilledList.MMUnbilled = new AEFURBarChartModel();
+                    unbilledList.MMUnbilled.TCName = new List<string>();
+                    unbilledList.MMUnbilled.Count = new List<int?>();
+
+                    unbilledList.MCUnbilled = new AEFURBarChartModel();
+                    unbilledList.MCUnbilled.TCName = new List<string>();
+                    unbilledList.MCUnbilled.Count = new List<int?>();
 
                     user.ForEach(item =>
                     {
                         var temp = unbilled.FirstOrDefault(r => r.BookingAgent.ToUpper() == (item.FirstName.ToUpper() + " " + item.LastName.ToUpper()));
 
-                        if(temp != null)
+                        if (temp != null)
                         {
-                            AEFURUnbilledReport newUnbilled = new AEFURUnbilledReport
+                            if(item.Department == "BL")
                             {
-                                Count = temp.UnbilledCount,
-                                Department = item.Department,
-                                TCName = temp.BookingAgent
-                            };
+                                unbilledList.BLDUnbilled.TCName.Add(temp.BookingAgent.ToUpper());
 
-                            unbilledList.Add(newUnbilled);
+                                unbilledList.BLDUnbilled.Count.Add(temp.UnbilledCount);
+                            }
+                            else if(item.Department == "MM")
+                            {
+                                unbilledList.MMUnbilled.TCName.Add(temp.BookingAgent.ToUpper());
+
+                                unbilledList.MMUnbilled.Count.Add(temp.UnbilledCount);
+                            }
+                            else if(item.Department == "MC")
+                            {
+                                unbilledList.MCUnbilled.TCName.Add(temp.BookingAgent.ToUpper());
+
+                                unbilledList.MCUnbilled.Count.Add(temp.UnbilledCount);
+                            }
                         }
                     });
 
-                    return unbilledList.OrderByDescending(r=>r.Count).ToList();
+                    return unbilledList;
                 }
             }
            catch(Exception error)

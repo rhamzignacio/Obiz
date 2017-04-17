@@ -12,9 +12,15 @@ namespace Obiz.Models
 
     public class AEFURUnbilledReport
     {
-        public string TCName { get; set; }
-        public int? Count { get; set; }
-        public string Department { get; set; }
+        public AEFURBarChartModel BLDUnbilled { get; set; }
+        public AEFURBarChartModel MMUnbilled { get; set; }
+        public AEFURBarChartModel MCUnbilled { get; set; }
+    }
+
+    public class AEFURBarChartModel
+    {
+        public List<string> TCName { get; set; }
+        public List<int?> Count { get; set; }
     }
 
     public class AEFURNoRecordModel

@@ -13,21 +13,7 @@
         </div>
 
         <div class="widget-content">
-            <table class="display" id="BLDUnbilledTable" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Agent Name</th>
-                        <th>Count</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr ng-repeat="ub in aefur.UnbilledReport | filter: {Department: 'BL'}">
-                        <td>{{ub.TCName}}</td>
-                        <td>{{ub.Count}}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <canvas id="BLDChart"></canvas>
         </div>
     </div>
 
@@ -37,21 +23,7 @@
         </div>
 
         <div class="widget-content">
-            <table class="display" id="MMUnbilledTable" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Agent Name</th>
-                        <th>Count</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr ng-repeat="ub in aefur.UnbilledReport | filter: {Department: 'MM'}">
-                        <td>{{ub.TCName}}</td>
-                        <td>{{ub.Count}}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <canvas id="MMChart"></canvas>
         </div>
     </div>
 
@@ -61,21 +33,7 @@
         </div>
 
         <div class="widget-content">
-            <table class="display" id="MCUnbilledTable" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Agent Name</th>
-                        <th>Count</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr ng-repeat="ub in aefur.UnbilledReport | filter: {Department: 'MC'}">
-                        <td>{{ub.TCName}}</td>
-                        <td>{{ub.Count}}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <chart id="MCChart"></chart>
         </div>
     </div>
 </div>

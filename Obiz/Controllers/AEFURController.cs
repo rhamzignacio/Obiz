@@ -31,14 +31,7 @@ namespace Obiz.Controllers
 
             var unbilled = AEFURService.GetAEFURUnbilledReport(out serverResponse);
 
-            var unbilledBLD = unbilled.Where(r => r.Department == "BL");
-
-            var unbilledMM = unbilled.Where(r => r.Department == "MM");
-
-            var unbilledMC = unbilled.Where(r => r.Department == "MC");
-
-            return Json(new { unbilledBLD = unbilledBLD, unbilledMC = unbilledMC,
-                unbilledMM = unbilledMM, errorMessage = serverResponse });
+            return Json(new { unbilled = unbilled, errorMessage = serverResponse });
         }
 
         [HttpPost]
