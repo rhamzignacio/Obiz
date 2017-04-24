@@ -278,7 +278,7 @@ namespace Obiz.Services
        
 
         public static List<SalesReportModel> GetSalesReportList(out string message, DateTime? startDate = null, DateTime? endDate = null, Guid? Client = null,
-            DateTime? startDueDate = null, DateTime? endDueDate = null)
+            DateTime? startDueDate = null, DateTime? endDueDate = null, Guid? accountManager = null)
         {
             try
             {
@@ -340,6 +340,9 @@ namespace Obiz.Services
 
                         if (endDueDate != null)
                             returnList = returnList.Where(r => r.DueDate <= endDueDate).ToList();
+
+                        if (accountManager != null)
+                            returnList = returnList.Where(r => r.UserID == accountManager).ToList();
 
                         if (returnList.AsQueryable().OrderByDescending(r => r.Date).ToList().Count > 0)
                             return returnList.AsQueryable().OrderByDescending(r => r.Date).ToList();

@@ -63,7 +63,14 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Client Name</label>
-                        <select id="searchClientName" style="width:100%" ng-model="vm.Search.Client" ng-options="item1.ID as item1.ClientName for item1 in rpt.ClientDropDown"></select>
+                        <select id="searchClientName" style="width:100%" ng-model="vm.Search.Client" 
+                                ng-options="item1.ID as item1.ClientName for item1 in rpt.ClientDropDown"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Account Manager</label>
+                        <select id="searchAccountManager" style="width:100%" ng-model="vm.Search.AccountManager"
+                                ng-options="item.ID as item.FullName for item in rpt.AccountManagerDropDown"></select>
                     </div>
 
                     <div class="form-group">

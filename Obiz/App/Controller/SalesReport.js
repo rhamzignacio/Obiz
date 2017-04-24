@@ -7,16 +7,20 @@
                 if (scope.$last === true) {
                     element.ready(function () {
                         // CALL TEST HERE!
-                        $("#activityReportTable").DataTable({
-                            searching: false,
-                            ordering: false,
-                            columnDefs: [
-                            { "name": "username", "targets": 1 },
-                            { "name": "name", "targets": 2 },
-                            { "name": "department", "targets": 3 }
-                            ],
-                        });
+                        //if ($.fn.dataTable.isDataTable("#activityReportTable")) {
+                        //    var table = $("#activityReportTable").DataTable();
 
+                        //    table.destroy();
+
+                        //    table.clear();
+
+                        //}
+                        //else {
+                            $("#activityReportTable").DataTable({
+                                searching: false,
+                                ordering: false,
+                            });
+                        //}
                     });
                 }
             }
@@ -185,10 +189,23 @@
 
         vm.Search.EndDeadline = null;
 
+        vm.Search.AccountManager = "";
+
         SuccessMessage("Search Parameter successfully cleard");
     }
 
     $scope.Search = function (value) {
+        vm.SalesHeader = {};
+
+        if ($.fn.dataTable.isDataTable("#activityReportTable")) {
+            var table = $("#activityReportTable").DataTable();
+
+            table.destroy();
+
+            table.clear();
+
+        }
+
         $http({
             method: "POST",
             url: "/SalesReport/GetSalesReport",
@@ -196,11 +213,20 @@
             data: {
                 startDate: value.StartDate,
                 endDate: value.EndDate,
-                client: value.Client
+                client: value.Client,
+                accountManager: value.AccountManager
             }
         }).then(function (data) {
             if (data.data.message == "") {
+
                 vm.SalesHeader = data.data.list;
+
+                if (vm.SalesHeader.length == 0) {
+                    $("#activityReportTable").DataTable({
+                        searching: false,
+                        ordering: false,
+                    });
+                }
 
                 vm.ShowSearch = {};
 

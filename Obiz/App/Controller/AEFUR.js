@@ -45,6 +45,7 @@
         growl.success("Successfully " + message, { ttl: 2000 });
     }
 
+
     ErrorMessage = function (message) {
         growl.error(message, { title: "Error!", ttl: 3000 });
     }

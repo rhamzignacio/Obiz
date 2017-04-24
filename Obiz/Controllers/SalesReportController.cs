@@ -124,12 +124,12 @@ namespace Obiz.Controllers
 
         [HttpPost]
         public JsonResult GetSalesReport(DateTime? startDate = null, DateTime? endDate = null, Guid? client = null,
-            DateTime? startDueDate = null, DateTime? endDueDate = null)
+            DateTime? startDueDate = null, DateTime? endDueDate = null, Guid? accountManager = null)
         {
             string serverResponse = "";
 
 
-            var list = SalesReportService.GetSalesReportList(out serverResponse, startDate, endDate, client, startDueDate, endDueDate);
+            var list = SalesReportService.GetSalesReportList(out serverResponse, startDate, endDate, client, startDueDate, endDueDate, accountManager);
 
             var priviledge = UniversalService.GetPriviledge("SalesReport", out serverResponse);
 
