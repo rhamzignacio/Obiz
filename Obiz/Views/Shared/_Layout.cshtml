@@ -42,8 +42,9 @@
             </li>*@
             <li class="submenu" ng-show="vm.Menu.Report == 'Y' || vm.CurrentUser.Department == 'IT'"><a href="#"><i class="icon icon-dashboard"></i><span>Reports</span></a>
                 <ul>
-                    <li ng-show="vm.Menu.ActivityReportCharts == 'Y' || vm.CurrentUser.Department == 'IT'"><a href="/SalesReport/Reports">Activity Report</a></li>
-                    @*<li><a href="/AEFUR/ReportMenu">AEFUR</a></li>*@
+                    <li ng-show="vm.Menu.ActivityReportCharts == 'Y' || vm.CurrentUser.Department == 'IT'"><a href="/SalesReport/Dashboard">Activity Report</a></li>
+                    @*<li><a href="/SalesReport/Dashboard"><span>Dashboard</span></a></li>*@
+                     @*<li><a href="/AEFUR/ReportMenu">AEFUR</a></li>*@
                 </ul>
             </li>
             <li ng-show="vm.CurrentUser.Department == 'IT'"><a href="/Admin/UserAccount"><i class="icon icon-group"></i> <span>Users</span></a></li>
@@ -62,7 +63,7 @@
 
         <!--Footer-part-->
         <div class="row-fluid">
-            <div id="footer" class="span12"> 2017 &copy; Obiz v1.4 by Philscan Travel and Tours Inc.</div>
+            <div id="footer" class="span12"> 2017 &copy; Obiz v1.5 by Philscan Travel and Tours Inc.</div>
         </div>
 
         <!--end-Footer-part-->

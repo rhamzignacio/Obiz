@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div role="main" ng-controller="salesReportController as SR" ng-init="Dashboard()">
+    <div class="span10">
+        <div class="widget-box">
+            <div class="widget-title">
+                <h5>Date Parameter</h5>
+            </div>
+
+            <div class="widget-content">
+                <div class="form-group">
+                    <span>From </span><input type="date" ng-model="SR.Search.StartDate" />
+                    <span>To </span><input type="date" ng-model="SR.Search.EndDate" />
+                    <button type="button" style="margin-bottom:10px;" class="btn btn-primary btn-xs"
+                            ng-click="SearchDashboard(SR.Search)">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="span5">
+        <div class="widget-box">
+            <div class="widget-title">
+                <h5>Top Clients</h5>
+            </div>
+
+            <div class="widget-content">
+                <table class="display" id="topClientTable" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style="width:50px;">Rank</th>
+                            <th>Client Name</th>
+                            <th style="width:100px;">No of Activities</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="top in SR.TopClients">
+                            <td>#{{top.No}}</td>
+                            <td>{{top.ClientName}}</td>
+                            <td>{{top.Count}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="span5">
+        <div class="widget-box">
+            <div class="widget-title">
+                <h5>Total Activity per AM</h5>
+            </div>
+
+            <div class="widget-content">
+                <canvas id="piechart_3d" style="width: 900px; height: 500px;"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="span10">
+        <div class="widget-box">
+            <div class="widget-title">
+                <h5>Total Type of Activity</h5>
+            </div>
+
+            <div class="widget-content">
+                <canvas id="typeOfActivityChart" style="width:900px; height:500px;"></canvas>
+            </div>
+        </div>
+    </div>
+</div>

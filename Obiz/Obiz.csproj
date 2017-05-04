@@ -241,6 +241,9 @@
     <Compile Include="Models\IfInvoiceDetail.cs">
       <DependentUpon>TravComEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\InplantProductivity.cs">
+      <DependentUpon>ObizEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MenuModel.cs" />
     <Compile Include="Models\ObizEntities.Context.cs">
       <AutoGen>True</AutoGen>
@@ -3696,6 +3699,8 @@
     <Content Include="Views\Home\AEFURReport.cshtml" />
     <Content Include="Views\AEFUR\AEFURUnbilledReport.cshtml" />
     <Content Include="Views\AEFUR\ReportMenu.cshtml" />
+    <Content Include="Views\AEFUR\InplantProductivity.cshtml" />
+    <Content Include="Views\SalesReport\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

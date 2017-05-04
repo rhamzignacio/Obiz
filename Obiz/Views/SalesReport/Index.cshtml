@@ -45,7 +45,7 @@
                         <td>{{sales.ShowDate}}</td>
                         <td>{{sales.ShowCategory}} {{sales.ShowTypeOfActivity}}</td>
                         <td>{{sales.AgendaIssueConcerns}}</td>
-                        <td>{{sales.BCDDeliverables}}</td>
+                        <td>{{sales.ScopeAction}}</td>
                         <td>{{sales.ShowStatus}} {{sales.ShowDueDate}}</td>
                     </tr>
                 </tbody>
@@ -71,6 +71,12 @@
                         <label>Account Manager</label>
                         <select id="searchAccountManager" style="width:100%" ng-model="vm.Search.AccountManager"
                                 ng-options="item.ID as item.FullName for item in rpt.AccountManagerDropDown"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Type of Activity</label>
+                        <select id="searchTypeOfActivity" style="width:100%" ng-model="vm.Search.TypeOfActivity"
+                                ng-options="item.value as item.label for item in TypeOfActivityDropDown"></select>
                     </div>
 
                     <div class="form-group">

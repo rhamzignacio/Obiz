@@ -30,6 +30,11 @@ namespace Obiz.Controllers
             return View();
         }
 
+        public ActionResult Dashboard()
+        {
+            return View();
+        }
+
         public ActionResult PercentageTypeOfActivity()
         {
             return View();
@@ -124,12 +129,12 @@ namespace Obiz.Controllers
 
         [HttpPost]
         public JsonResult GetSalesReport(DateTime? startDate = null, DateTime? endDate = null, Guid? client = null,
-            DateTime? startDueDate = null, DateTime? endDueDate = null, Guid? accountManager = null)
+            DateTime? startDueDate = null, DateTime? endDueDate = null, Guid? accountManager = null, string typeOfActivity = null)
         {
             string serverResponse = "";
 
 
-            var list = SalesReportService.GetSalesReportList(out serverResponse, startDate, endDate, client, startDueDate, endDueDate, accountManager);
+            var list = SalesReportService.GetSalesReportList(out serverResponse, startDate, endDate, client, startDueDate, endDueDate, accountManager, typeOfActivity);
 
             var priviledge = UniversalService.GetPriviledge("SalesReport", out serverResponse);
 

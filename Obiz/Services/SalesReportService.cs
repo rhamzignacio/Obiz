@@ -15,7 +15,7 @@ namespace Obiz.Services
             try
             {
                 if (startDate == null)
-                    startDate = DateTime.Now.AddMonths(-1);
+                    startDate = DateTime.Now.AddMonths(-3);
 
                 if (endDate == null)
                     endDate = DateTime.Now;
@@ -75,7 +75,7 @@ namespace Obiz.Services
             try
             {
                 if (startDate == null)
-                    startDate = DateTime.Now.AddMonths(-1);
+                    startDate = DateTime.Now.AddMonths(-3);
 
                 if (endDate == null)
                     endDate = DateTime.Now;
@@ -115,7 +115,7 @@ namespace Obiz.Services
 
                 //Default date parameter
                 if (startDate == null)
-                    startDate = DateTime.Now.AddMonths(-1);
+                    startDate = DateTime.Now.AddMonths(-3);
 
                 if (endDate == null)
                     endDate = DateTime.Now;
@@ -278,7 +278,7 @@ namespace Obiz.Services
        
 
         public static List<SalesReportModel> GetSalesReportList(out string message, DateTime? startDate = null, DateTime? endDate = null, Guid? Client = null,
-            DateTime? startDueDate = null, DateTime? endDueDate = null, Guid? accountManager = null)
+            DateTime? startDueDate = null, DateTime? endDueDate = null, Guid? accountManager = null, string typeOfActivity = null)
         {
             try
             {
@@ -343,6 +343,9 @@ namespace Obiz.Services
 
                         if (accountManager != null)
                             returnList = returnList.Where(r => r.UserID == accountManager).ToList();
+
+                        if (typeOfActivity != null)
+                            returnList = returnList.Where(r => r.TypeOfActivity == typeOfActivity).ToList();
 
                         if (returnList.AsQueryable().OrderByDescending(r => r.Date).ToList().Count > 0)
                             return returnList.AsQueryable().OrderByDescending(r => r.Date).ToList();

@@ -30,5 +30,6 @@ namespace Obiz.Models
         public virtual DbSet<ServiceIssueLog> ServiceIssueLog { get; set; }
         public virtual DbSet<UserAccount> UserAccount { get; set; }
         public virtual DbSet<UserPrivilege> UserPrivilege { get; set; }
+        public virtual DbSet<InplantProductivity> InplantProductivity { get; set; }
     }
 }

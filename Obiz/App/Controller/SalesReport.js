@@ -177,6 +177,21 @@
 
         openSalesReport();
     }
+    $scope.Dashboard = function () {
+        $scope.initTopClient();
+
+        $scope.initReport();
+
+        $scope.initTypeOfActivity();
+    }
+
+    $scope.SearchDashboard = function (value) {
+        $scope.SearchTopClient(value);
+
+        $scope.SearchReport(value);
+
+        $scope.SearchTypeOfActivity(value);
+    }
 
     $scope.ClearSearch = function () {
         vm.Search.Client = "";
@@ -214,7 +229,8 @@
                 startDate: value.StartDate,
                 endDate: value.EndDate,
                 client: value.Client,
-                accountManager: value.AccountManager
+                accountManager: value.AccountManager,
+                typeOfActivity: value.TypeOfActivity
             }
         }).then(function (data) {
             if (data.data.message == "") {
@@ -258,7 +274,7 @@
             var ctx = document.getElementById("piechart_3d");
 
             var myChart = new Chart(ctx, {
-                type: 'bar',
+                type: 'horizontalBar',
                 data: {
                     labels: vm.AMProductivity.Names,
                     datasets: [{
@@ -309,7 +325,7 @@
             var ctx = document.getElementById("piechart_3d");
 
             var myChart = new Chart(ctx, {
-                type: 'bar',
+                type: 'horizontalBar',
                 data: {
                     labels: vm.AMProductivity.Names,
                     datasets: [{
@@ -363,7 +379,7 @@
             var ctx = document.getElementById("typeOfActivityChart");
 
             var myChart = new Chart(ctx, {
-                type: 'bar',
+                type: 'horizontalBar',
                 data: {
                     labels: vm.PercentageTypeActivity.ShowTypeOfActivities,
                     datasets: [{
@@ -439,7 +455,7 @@
             var ctx = document.getElementById("typeOfActivityChart");
 
             var myChart = new Chart(ctx, {
-                type: 'bar',
+                type: 'horizontalBar',
                 data: {
                     labels: vm.PercentageTypeActivity.ShowTypeOfActivities,
                     datasets: [{

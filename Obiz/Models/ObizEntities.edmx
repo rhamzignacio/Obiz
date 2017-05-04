@@ -13,6 +13,13 @@
           <Property Name="ClientName" Type="varchar" MaxLength="300" />
           <Property Name="Status" Type="varchar" MaxLength="1" />
         </EntityType>
+        <EntityType Name="InplantProductivity">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
         <EntityType Name="SalesReport">
           <Key>
             <PropertyRef Name="ID" />
@@ -89,6 +96,7 @@
         </EntityType>
         <EntityContainer Name="ObizModelStoreContainer">
           <EntitySet Name="ClientProfile" EntityType="Self.ClientProfile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InplantProductivity" EntityType="Self.InplantProductivity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SalesReport" EntityType="Self.SalesReport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceIssueLog" EntityType="Self.ServiceIssueLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserAccount" EntityType="Self.UserAccount" Schema="dbo" store:Type="Tables" />
@@ -104,6 +112,7 @@
           <EntitySet Name="ServiceIssueLog" EntityType="ObizModel.ServiceIssueLog" />
           <EntitySet Name="UserAccount" EntityType="ObizModel.UserAccount" />
           <EntitySet Name="UserPrivilege" EntityType="ObizModel.UserPrivilege" />
+          <EntitySet Name="InplantProductivity" EntityType="ObizModel.InplantProductivity" />
         </EntityContainer>
         <EntityType Name="ClientProfile">
           <Key>
@@ -186,6 +195,13 @@
           <Property Name="Delete" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="Override" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="View" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="InplantProductivity">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="UserID" Type="Guid" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -276,6 +292,14 @@
                 <ScalarProperty Name="Add" ColumnName="Add" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Module" ColumnName="Module" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InplantProductivity">
+            <EntityTypeMapping TypeName="ObizModel.InplantProductivity">
+              <MappingFragment StoreEntitySet="InplantProductivity">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -24,6 +24,11 @@ namespace Obiz.Controllers
             return View();
         }
 
+        public ActionResult InplantProductivity()
+        {
+            return View();
+        }
+
         [HttpPost]
         public JsonResult GetAEFURUnbilledReport()
         {
