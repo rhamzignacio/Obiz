@@ -34,5 +34,6 @@ namespace Obiz.Models
         public string FreeFieldA { get; set; }
         public string Department { get; set; }
         public string TicketingAgentNumber { get; set; }
+        public string BookingAgentName { get; set; }
     }
 }

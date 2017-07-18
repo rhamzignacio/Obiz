@@ -245,6 +245,9 @@
       <DependentUpon>ObizEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MenuModel.cs" />
+    <Compile Include="Models\ObizAccountingInvoiceCount.cs">
+      <DependentUpon>TravComEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ObizEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -263,6 +266,9 @@
     <Compile Include="Models\Pager.cs" />
     <Compile Include="Models\PriviledgeModel.cs" />
     <Compile Include="Models\SalesReport.cs">
+      <DependentUpon>ObizEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SalesReportAttachment.cs">
       <DependentUpon>ObizEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SalesReportModel.cs" />
@@ -3701,6 +3707,7 @@
     <Content Include="Views\AEFUR\ReportMenu.cshtml" />
     <Content Include="Views\AEFUR\InplantProductivity.cshtml" />
     <Content Include="Views\SalesReport\Dashboard.cshtml" />
+    <Content Include="Views\AEFUR\BillerDashBoard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

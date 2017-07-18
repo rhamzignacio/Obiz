@@ -26,10 +26,11 @@ namespace Obiz.Models
         }
     
         public virtual DbSet<ClientProfile> ClientProfile { get; set; }
+        public virtual DbSet<InplantProductivity> InplantProductivity { get; set; }
         public virtual DbSet<SalesReport> SalesReport { get; set; }
         public virtual DbSet<ServiceIssueLog> ServiceIssueLog { get; set; }
         public virtual DbSet<UserAccount> UserAccount { get; set; }
         public virtual DbSet<UserPrivilege> UserPrivilege { get; set; }
-        public virtual DbSet<InplantProductivity> InplantProductivity { get; set; }
+        public virtual DbSet<SalesReportAttachment> SalesReportAttachment { get; set; }
     }
 }

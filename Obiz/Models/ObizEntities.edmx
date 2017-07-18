@@ -43,6 +43,19 @@
           <Property Name="Category" Type="varchar" MaxLength="50" />
           <Property Name="SLA" Type="varchar" MaxLength="1" />
         </EntityType>
+        <EntityType Name="SalesReportAttachment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SalesReportID" Type="uniqueidentifier" />
+          <Property Name="FileName" Type="varchar" MaxLength="100" />
+          <Property Name="Path" Type="varchar(max)" />
+          <Property Name="Extension" Type="varchar" MaxLength="50" />
+          <Property Name="FileSize" Type="varchar" MaxLength="50" />
+          <Property Name="ModifiedBy" Type="uniqueidentifier" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="ServiceIssueLog">
           <Key>
             <PropertyRef Name="ID" />
@@ -80,6 +93,10 @@
           <Property Name="AgentCode3" Type="varchar" MaxLength="20" />
           <Property Name="PartnerAgent" Type="varchar" MaxLength="20" />
           <Property Name="CebBizPartner" Type="varchar" MaxLength="20" />
+          <Property Name="DepartmentHead" Type="varchar" MaxLength="1" />
+          <Property Name="Email" Type="varchar" MaxLength="200" />
+          <Property Name="ClientMagicLogin" Type="varchar" MaxLength="300" />
+          <Property Name="Type" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="UserPrivilege">
           <Key>
@@ -88,16 +105,17 @@
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Module" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Add" Type="varchar" MaxLength="1" Nullable="false" />
-          <Property Name="Edit" Type="varchar" MaxLength="1" Nullable="false" />
-          <Property Name="Delete" Type="varchar" MaxLength="1" Nullable="false" />
-          <Property Name="Override" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="Add" Type="varchar" MaxLength="1" />
+          <Property Name="Edit" Type="varchar" MaxLength="1" />
+          <Property Name="Delete" Type="varchar" MaxLength="1" />
+          <Property Name="Override" Type="varchar" MaxLength="1" />
           <Property Name="View" Type="varchar" MaxLength="1" />
         </EntityType>
         <EntityContainer Name="ObizModelStoreContainer">
           <EntitySet Name="ClientProfile" EntityType="Self.ClientProfile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InplantProductivity" EntityType="Self.InplantProductivity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SalesReport" EntityType="Self.SalesReport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SalesReportAttachment" EntityType="Self.SalesReportAttachment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceIssueLog" EntityType="Self.ServiceIssueLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserAccount" EntityType="Self.UserAccount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserPrivilege" EntityType="Self.UserPrivilege" Schema="dbo" store:Type="Tables" />
@@ -108,11 +126,12 @@
       <Schema Namespace="ObizModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="ObizEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ClientProfile" EntityType="ObizModel.ClientProfile" />
+          <EntitySet Name="InplantProductivity" EntityType="ObizModel.InplantProductivity" />
           <EntitySet Name="SalesReport" EntityType="ObizModel.SalesReport" />
           <EntitySet Name="ServiceIssueLog" EntityType="ObizModel.ServiceIssueLog" />
           <EntitySet Name="UserAccount" EntityType="ObizModel.UserAccount" />
           <EntitySet Name="UserPrivilege" EntityType="ObizModel.UserPrivilege" />
-          <EntitySet Name="InplantProductivity" EntityType="ObizModel.InplantProductivity" />
+          <EntitySet Name="SalesReportAttachment" EntityType="ObizModel.SalesReportAttachment" />
         </EntityContainer>
         <EntityType Name="ClientProfile">
           <Key>
@@ -121,6 +140,13 @@
           <Property Name="ID" Type="Guid" Nullable="false" />
           <Property Name="ClientName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="InplantProductivity">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="UserID" Type="Guid" Nullable="false" />
         </EntityType>
         <EntityType Name="SalesReport">
           <Key>
@@ -182,6 +208,10 @@
           <Property Name="AgentCode3" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="PartnerAgent" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="CebBizPartner" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DepartmentHead" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ClientMagicLogin" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="UserPrivilege">
           <Key>
@@ -190,18 +220,24 @@
           <Property Name="ID" Type="Guid" Nullable="false" />
           <Property Name="Module" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="UserID" Type="Guid" Nullable="false" />
-          <Property Name="Add" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Edit" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Delete" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Override" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Add" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Edit" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Delete" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Override" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="View" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="InplantProductivity">
+        <EntityType Name="SalesReportAttachment">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="UserID" Type="Guid" Nullable="false" />
+          <Property Name="SalesReportID" Type="Guid" />
+          <Property Name="FileName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Extension" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FileSize" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedBy" Type="Guid" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -214,6 +250,14 @@
               <MappingFragment StoreEntitySet="ClientProfile">
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InplantProductivity">
+            <EntityTypeMapping TypeName="ObizModel.InplantProductivity">
+              <MappingFragment StoreEntitySet="InplantProductivity">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -266,6 +310,10 @@
           <EntitySetMapping Name="UserAccount">
             <EntityTypeMapping TypeName="ObizModel.UserAccount">
               <MappingFragment StoreEntitySet="UserAccount">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ClientMagicLogin" ColumnName="ClientMagicLogin" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DepartmentHead" ColumnName="DepartmentHead" />
                 <ScalarProperty Name="CebBizPartner" ColumnName="CebBizPartner" />
                 <ScalarProperty Name="PartnerAgent" ColumnName="PartnerAgent" />
                 <ScalarProperty Name="AgentCode3" ColumnName="AgentCode3" />
@@ -296,10 +344,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="InplantProductivity">
-            <EntityTypeMapping TypeName="ObizModel.InplantProductivity">
-              <MappingFragment StoreEntitySet="InplantProductivity">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <EntitySetMapping Name="SalesReportAttachment">
+            <EntityTypeMapping TypeName="ObizModel.SalesReportAttachment">
+              <MappingFragment StoreEntitySet="SalesReportAttachment">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="FileSize" ColumnName="FileSize" />
+                <ScalarProperty Name="Extension" ColumnName="Extension" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="SalesReportID" ColumnName="SalesReportID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

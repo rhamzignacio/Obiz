@@ -6,11 +6,12 @@
     <edmx:Diagrams>
       <Diagram DiagramId="d7574055e7764589af96a3d6fdc697cb" Name="Diagram1">
         <EntityTypeShape EntityType="ObizModel.ClientProfile" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ObizModel.SalesReport" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ObizModel.ServiceIssueLog" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ObizModel.UserAccount" Width="1.5" PointX="4.75" PointY="5.75" />
-        <EntityTypeShape EntityType="ObizModel.UserPrivilege" Width="1.5" PointX="6.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ObizModel.InplantProductivity" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="ObizModel.InplantProductivity" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ObizModel.SalesReport" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="ObizModel.ServiceIssueLog" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="ObizModel.UserAccount" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ObizModel.UserPrivilege" Width="1.5" PointX="4.75" PointY="5.75" />
+        <EntityTypeShape EntityType="ObizModel.SalesReportAttachment" Width="1.5" PointX="7.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

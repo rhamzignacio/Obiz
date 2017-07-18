@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Obiz.Services;
+using Obiz.Models;
 
 namespace Obiz.Controllers
 {
@@ -15,7 +16,7 @@ namespace Obiz.Controllers
             return View();
         }
 
-        public ActionResult OpenUserAccount()
+        public ActionResult OpenUserAccount(Guid? ID)
         {
             return View();
         }
@@ -28,6 +29,28 @@ namespace Obiz.Controllers
             var users = UserService.GetAllClient(out serverResponse);
 
             return Json(new { users = users, message = serverResponse });
+        }
+
+        [HttpPost]
+        public JsonResult Save(UserAccountModel user)
+        {
+            string serverResponse = "";
+
+            if (user != null)
+                UserService.SaveUser(user, out serverResponse);
+
+            return Json(serverResponse);
+        }
+
+        [HttpPost]
+        public JsonResult GetSelectedUser(Guid ID)
+
+        {
+            string serverResponse = "";
+
+            var user = UserService.GetSelectedUser(ID, out serverResponse);
+
+            return Json(new { user = user, errorMessage = serverResponse });
         }
     }
 }

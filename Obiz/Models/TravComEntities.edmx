@@ -102,6 +102,7 @@ warning 6002: The table/view 'TravCom.dbo.AEFURUnbilled' does not have a primary
             <PropertyRef Name="InvoiceID" />
           </Key>
           <Property Name="BookingDate" Type="datetime" />
+          <Property Name="BookingAgentName" Type="varchar" MaxLength="50" />
           <Property Name="TicketingAgent" Type="varchar" MaxLength="50" />
           <Property Name="InvoiceID" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="InvoiceDetailID" Type="numeric" Precision="18" Scale="0" />
@@ -132,6 +133,19 @@ warning 6002: The table/view 'TravCom.dbo.AEFURUnbilledCount' does not have a pr
           <Property Name="BookingAgent" Type="varchar" MaxLength="50" />
           <Property Name="id" Type="bigint" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TravCom.dbo.ObizAccountingInvoiceCount' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ObizAccountingInvoiceCount">
+          <Key>
+            <PropertyRef Name="AddedBy" />
+          </Key>
+          <Property Name="RecordLocator" Type="varchar" MaxLength="20" />
+          <Property Name="ProfileName" Type="varchar" MaxLength="50" />
+          <Property Name="AddedBy" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
+          <Property Name="InvoiceDate" Type="datetime" />
+          <Property Name="Login" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityContainer Name="TravComModelStoreContainer">
           <EntitySet Name="IfInvoiceDetails" EntityType="Self.IfInvoiceDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AEFURProductivityCount" EntityType="Self.AEFURProductivityCount" store:Type="Views" store:Schema="dbo">
@@ -144,6 +158,7 @@ warning 6002: The table/view 'TravCom.dbo.AEFURUnbilledCount' does not have a pr
           <EntitySet Name="AEFURUnbilled" EntityType="Self.AEFURUnbilled" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [AEFURUnbilled].[BookingDate] AS [BookingDate], 
+    [AEFURUnbilled].[BookingAgentName] AS [BookingAgentName], 
     [AEFURUnbilled].[TicketingAgent] AS [TicketingAgent], 
     [AEFURUnbilled].[InvoiceID] AS [InvoiceID], 
     [AEFURUnbilled].[InvoiceDetailID] AS [InvoiceDetailID], 
@@ -172,6 +187,16 @@ warning 6002: The table/view 'TravCom.dbo.AEFURUnbilledCount' does not have a pr
     [AEFURUnbilledCount].[id] AS [id]
     FROM [dbo].[AEFURUnbilledCount] AS [AEFURUnbilledCount]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="ObizAccountingInvoiceCount" EntityType="Self.ObizAccountingInvoiceCount" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ObizAccountingInvoiceCount].[RecordLocator] AS [RecordLocator], 
+    [ObizAccountingInvoiceCount].[ProfileName] AS [ProfileName], 
+    [ObizAccountingInvoiceCount].[AddedBy] AS [AddedBy], 
+    [ObizAccountingInvoiceCount].[UserName] AS [UserName], 
+    [ObizAccountingInvoiceCount].[InvoiceDate] AS [InvoiceDate], 
+    [ObizAccountingInvoiceCount].[Login] AS [Login]
+    FROM [dbo].[ObizAccountingInvoiceCount] AS [ObizAccountingInvoiceCount]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -182,6 +207,7 @@ warning 6002: The table/view 'TravCom.dbo.AEFURUnbilledCount' does not have a pr
           <EntitySet Name="AEFURUnbilledCount" EntityType="TravComModel.AEFURUnbilledCount" />
           <EntitySet Name="AEFURProductivityCount" EntityType="TravComModel.AEFURProductivityCount" />
           <EntitySet Name="AEFURUnbilled" EntityType="TravComModel.AEFURUnbilled" />
+          <EntitySet Name="ObizAccountingInvoiceCount" EntityType="TravComModel.ObizAccountingInvoiceCount" />
         </EntityContainer>
         <EntityType Name="IfInvoiceDetail">
           <Key>
@@ -303,6 +329,18 @@ warning 6002: The table/view 'TravCom.dbo.AEFURUnbilledCount' does not have a pr
           <Property Name="FreeFieldA" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TicketingAgentNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="BookingAgentName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ObizAccountingInvoiceCount">
+          <Key>
+            <PropertyRef Name="AddedBy" />
+          </Key>
+          <Property Name="RecordLocator" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ProfileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AddedBy" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="InvoiceDate" Type="DateTime" Precision="3" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -412,6 +450,7 @@ warning 6002: The table/view 'TravCom.dbo.AEFURUnbilledCount' does not have a pr
           <EntitySetMapping Name="AEFURUnbilled">
             <EntityTypeMapping TypeName="TravComModel.AEFURUnbilled">
               <MappingFragment StoreEntitySet="AEFURUnbilled">
+                <ScalarProperty Name="BookingAgentName" ColumnName="BookingAgentName" />
                 <ScalarProperty Name="TicketingAgentNumber" ColumnName="TicketingAgentNumber" />
                 <ScalarProperty Name="Department" ColumnName="Department" />
                 <ScalarProperty Name="FreeFieldA" ColumnName="FreeFieldA" />
@@ -432,6 +471,18 @@ warning 6002: The table/view 'TravCom.dbo.AEFURUnbilledCount' does not have a pr
                 <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
                 <ScalarProperty Name="TicketingAgent" ColumnName="TicketingAgent" />
                 <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ObizAccountingInvoiceCount">
+            <EntityTypeMapping TypeName="TravComModel.ObizAccountingInvoiceCount">
+              <MappingFragment StoreEntitySet="ObizAccountingInvoiceCount">
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+                <ScalarProperty Name="ProfileName" ColumnName="ProfileName" />
+                <ScalarProperty Name="RecordLocator" ColumnName="RecordLocator" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

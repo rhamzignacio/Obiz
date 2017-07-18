@@ -7,9 +7,9 @@
 <div class="container-fluid" ng-controller="adminController as adm" ng-init="initUser()">
     <h3>User Accounts</h3>
 
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#userModal">
+    <a type="button" class="btn btn-success" href="/Admin/OpenUserAccount">
         <span>New User</span>
-    </button>
+    </a>
     <div class="widget-box">
 
 
@@ -31,8 +31,8 @@
                                     <i class="icon-lock" ng-show="user.Status == 'Y'"></i>
                                     <i class="icon-unlock" ng-show="user.Status == 'N'"></i>
                                 </button>
-                                <button class="btn-info" style="width:30px;">
-                                    <i class="icon-eye-open"></i>
+                                <button class="btn-info" style="width:30px;" ng-click="Redirection(user.ID)">
+                                    <i class="icon-pencil"></i>
                                 </button>
                             </td>
                             <td class="sorting_1">{{user.Username}}</td>

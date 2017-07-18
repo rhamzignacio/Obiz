@@ -9,6 +9,7 @@
         <EntityTypeShape EntityType="TravComModel.AEFURUnbilledCount" Width="1.5" PointX="5.375" PointY="0.75" />
         <EntityTypeShape EntityType="TravComModel.AEFURProductivityCount" Width="1.5" PointX="5.375" PointY="3.75" />
         <EntityTypeShape EntityType="TravComModel.AEFURUnbilled" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="TravComModel.ObizAccountingInvoiceCount" Width="1.5" PointX="0.75" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

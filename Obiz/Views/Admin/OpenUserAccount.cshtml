@@ -4,10 +4,189 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container-fluid">
+<div class="container-fluid" ng-controller="adminController as adm" ng-init="GetSelectedUser()">
     <h3>User Account</h3>
 
-    <button type="button" class="btn btn-success" style="width:120px;" >
-        
-    </button>
+    <button type="button" class="btn btn-success" style="width:120px;" ng-click="SaveUser(adm.UserAccount)">Save</button>
+    <button type="button" class="btn btn-default" style="width:120px;">Cancel</button>
+
+    <div class="form-group">
+        <label>Username</label>
+        <input type="text" class="form-control" style="width:100%" ng-model="adm.UserAccount.Username" />
+    </div>
+
+    <div class="form-group">
+        <label>First name</label>
+        <input type="text" class="form-control" style="width:100%" ng-model="adm.UserAccount.Firstname" />
+    </div>
+
+    <div class="form-group">
+        <label>Middle Initial</label>
+        <input type="text" class="form-control" style="width:100%" ng-model="adm.UserAccount.MiddleInitial" />
+    </div>
+
+    <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" class="form-control" style="width:100%" ng-model="adm.UserAccount.LastName" />
+    </div>
+
+    <div class="form-group">
+        <label>Email</label>
+        <input type="email" class="form-control" style="width:100%" ng-model="adm.UserAccount.Email" />
+    </div>
+
+    <div class="form-group">
+        <label>Department</label>
+        <select class="form-control select2_single" style="width:100%" ng-model="adm.UserAccount.Department"
+                ng-options="item.value as item.label for item in DepartmentDropDown"></select>
+    </div>
+
+    <div class="form-group">
+        <label>Agent Code</label>
+        <span>#1 </span><input type="text" class="form-control" ng-model="adm.UserAccount.AgentCode1" />
+        <span>#2 </span><input type="text" class="form-control" ng-model="adm.UserAccount.AgentCode2" />
+        <span>#3 </span><input type="text" class="form-control" ng-model="adm.UserAccount.AgentCode3" />
+    </div>
+
+    <div class="form-group">
+        <label>Cebu Pacific Sign In</label>
+        <span>Partner Agent</span><input type="text" class="form-control" ng-model="adm.UserAccount.PartnerAgent" />
+        <span>CebBiz</span><input type="text" class="form-control" ng-model="adm.UserAccount.CebBizPartner" />
+    </div>
+
+    <div class="form-group">
+        <label>Client Magic Login</label>
+        <input type="text" class="form-control" ng-model="adm.UserAccount.ClientMagicLogin" />
+    </div>
+
+
+
+    <div class="form-control">
+        <label>Department Head</label>
+        <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.DepartmentHead"
+                ng-options="item.value as item.label for item in DepartmentHeadDropDown"></select>
+    </div>
+
+    <h2>Priviledge</h2>
+
+    <!--Activity Report Priviledge-->
+    <div class="widget-box">
+        <div class="widget-title"><span class="icon"><i class="icon-certificate"></i></span>
+            <h5>Main Module</h5>
+        </div>
+
+        <div class="widget-content">
+            <h5>AM Activity Report</h5>
+
+            <span>Add</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.AMActivityReport.Add"
+                                      ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <span>Edit</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.AMActivityReport.Edit"
+                                      ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <span>Delete</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.AMActivityReport.Delete"
+                                      ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <span>Override</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.AMActivityReport.Override"
+                                      ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <span>View</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.AMActivityReport.View"
+                                      ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+           <h5>AEFUR</h5>
+            <span>Add</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.AEFUR.Add"
+                                     ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <span>Edit</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.AEFUR.Edit"
+                                      ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <span>Delete</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.AEFUR.Delete"
+                                        ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <span>Override</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.AEFUR.Override"
+                                          ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <span>View</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.AEFUR.View"
+                                      ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+        </div>
+    </div>
+    <!--/Activity Report Priviledge-->
+
+    <!--AEFUR Priviledge-->
+    <div class="widget-box">
+        <div class="widget-title"><span class="icon"><i class="icon-certificate"></i></span>
+            <h5>Report Module</h5>
+        </div>
+
+        <div class="widget-content">
+            <h5>Main</h5>
+            <span>Add</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.Report.Add"
+                                     ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <span>Edit</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.Report.Edit"
+                                      ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <span>Delete</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.Report.Delete"
+                                        ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <span>Override</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.Report.Override"
+                                          ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <span>View</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.Report.View"
+                                      ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <h5>Activity Report - Summary</h5>
+
+            <span>Add</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.ActivityReportSummary.Add"
+                                     ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <span>Edit</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.ActivityReportSummary.Edit"
+                                      ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <span>Delete</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.ActivityReportSummary.Delete"
+                                        ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <span>Override</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.ActivityReportSummary.Override"
+                                          ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <span>View</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.ActivityReportSummary.View"
+                                      ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <h5>Activity Report - Top Clients</h5>
+
+            <span>Add</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.TopClients.Add"
+                                     ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <span>Edit</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.TopClients.Edit"
+                                      ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <span>Delete</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.TopClients.Delete"
+                                        ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <span>Override</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.TopClients.Override"
+                                          ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <span>View</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.TopClients.View"
+                                      ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <h5>Activity Report - Percentage Activity</h5>
+
+            <span>Add</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.PercentageActivity.Add"
+                                     ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <span>Edit</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.PercentageActivity.Edit"
+                                      ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <span>Delete</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.PercentageActivity.Delete"
+                                        ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <span>Override</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.PercentageActivity.Override"
+                                          ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+
+            <span>View</span> <select class="form-control" style="width:70px;" ng-model="adm.UserAccount.PercentageActivity.View"
+                                      ng-options="item.value as item.label for item in PriviledgeDropDown"></select>
+        </div>
+    </div>
+    <!--/AEFUR Priviledge-->
 </div>

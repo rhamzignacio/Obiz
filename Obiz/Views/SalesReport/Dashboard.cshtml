@@ -8,15 +8,21 @@
     <div class="span10">
         <div class="widget-box">
             <div class="widget-title">
-                <h5>Date Parameter</h5>
+                <h5>Date Parameter <small>Default Date Range (3 months)</small></h5>
             </div>
 
             <div class="widget-content">
                 <div class="form-group">
+                    <span>Account Manager</span>
+                    <select class="select2_single" style="width:465px; margin-bottom:30px;" ng-model="SR.Search.AccountManager"
+                            ng-options="item.ID as item.FullName for item in SR.AccountManagerDropDown"></select>
+                    <br />
+                    <br />
                     <span>From </span><input type="date" ng-model="SR.Search.StartDate" />
                     <span>To </span><input type="date" ng-model="SR.Search.EndDate" />
                     <button type="button" style="margin-bottom:10px;" class="btn btn-primary btn-xs"
                             ng-click="SearchDashboard(SR.Search)">Search</button>
+
                 </div>
             </div>
         </div>

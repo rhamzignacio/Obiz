@@ -9,53 +9,86 @@ namespace Obiz.Models
     {
         public Guid ID { get; set; }
         public Guid UserID { get; set; }
-        public string Add { get; set; }
-        public string Edit { get; set; }
-        public string Delete { get; set; }
-        public string Override { get; set; }
-        public string View { get; set; }
+        public string Module { get; set; }
 
-        //public string ShowAdd
-        //{
-        //    get
-        //    {
-        //        if (Add)
-        //            return "Y";
-        //        else
-        //            return "N";
-        //    }
-        //}
+        private string _add;
+        public string Add
+        {
+            get
+            {
+                if (_add == null)
+                    return "N";
+                else
+                    return _add;
+            }
+            set
+            {
+                _add = value;
+            }
+        }
 
-        //public string ShowEdit
-        //{
-        //    get
-        //    {
-        //        if (Edit)
-        //            return "Y";
-        //        else
-        //            return "N";
-        //    }
-        //}
+        private string _edit;
+        public string Edit
+        {
+            get
+            {
+                if (_edit == null)
+                    return "N";
+                else
+                    return _edit;
+            }
+            set
+            {
+                _edit = value;
+            }
+        }
 
-        //public string ShowDelete
-        //{
-        //    get
-        //    {
-        //        if (Delete)
-        //            return "Y";
-        //        else
-        //            return "N";
-        //    }
-        //}
-        //public string ShowOverride
-        //{
-        //    get
-        //    {
-        //        if (Override)
-        //            return "Y";
-        //        else
-        //            return "N";
-        //    }
-        //}
+        private string _delete;
+        public string Delete
+        {
+            get
+            {
+                if (_delete == null)
+                    return "N";
+                else
+                    return _delete;
+            }
+            set
+            {
+                _delete = value;
+            }
+        }
+
+        private string _override;
+        public string Override
+        {
+            get
+            {
+                if (_override == null)
+                    return "N";
+                else
+                    return _override;
+            }
+            set
+            {
+                _override = value;
+            }
+        }
+
+        private string _view;
+        public string View
+        {
+            get
+            {
+                if (_view == null)
+                    return "N";
+                else
+                    return _view;
+            }
+            set
+            {
+                _view = value;
+            }
+        }
     }
 }

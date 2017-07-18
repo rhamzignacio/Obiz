@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Obiz.Services;
 using Obiz.Models;
+using System.IO;
 
 namespace Obiz.Controllers
 {
@@ -46,6 +47,57 @@ namespace Obiz.Controllers
         }
 
         [HttpPost]
+        public JsonResult FileUpload(Guid SalesID)
+        {
+            var httpRequest = System.Web.HttpContext.Current.Request;
+
+            HttpFileCollection uploadFiles = httpRequest.Files;
+
+            var docFiles = new List<string>();
+
+            string newFileName = "";
+
+            string ext = "";
+
+            if(httpRequest.Files.Count > 0)
+            {
+                for(int i = 0; i < uploadFiles.Count; i++)
+                {
+                    HttpPostedFile postedFile = uploadFiles[i];
+
+                    ext = Path.GetExtension(postedFile.FileName);
+
+                    newFileName = DateTime.Now.ToString("MMddyyyHHmmSS");
+
+                    var filePath = Server.MapPath(@"\FileUploads\" + newFileName + ext);
+
+                    postedFile.SaveAs(filePath);
+
+                    using(var db = new ObizEntities())
+                    {
+                        SalesReportAttachment newAttachment = new SalesReportAttachment
+                        {
+                            ID = Guid.NewGuid(),
+                            SalesReportID = SalesID,
+                            FileName = postedFile.FileName,
+                            FileSize = (postedFile.ContentLength / 1024).ToString(),
+                            Extension = ext,
+                            Path = newFileName + ext,
+                            ModifiedBy = UniversalHelper.CurrentUser.ID,
+                            ModifiedDate = DateTime.Now
+                        };
+
+                        db.Entry(newAttachment).State = System.Data.Entity.EntityState.Added;
+
+                        db.SaveChanges();
+                    }
+                }
+            }
+
+            return Json("");
+        }
+
+        [HttpPost]
         public JsonResult GetReportPriviledge()
         {
             string serverResponse = "";
@@ -64,21 +116,21 @@ namespace Obiz.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetTop10Clients(DateTime? startDate = null, DateTime? endDate = null)
+        public JsonResult GetTop10Clients(DateTime? startDate = null, DateTime? endDate = null, Guid? accountManager = null)
         {
             string serverResponse = "";
             
-            var top = SalesReportService.GetTop10Clients(out serverResponse, startDate, endDate);
+            var top = SalesReportService.GetTop10Clients(out serverResponse, startDate, endDate, accountManager);
 
             return Json(new { top = top });
         }
 
         [HttpPost]
-        public JsonResult GetPercentageOfTypeOfActivity(DateTime? startDate = null, DateTime? endDate = null)
+        public JsonResult GetPercentageOfTypeOfActivity(DateTime? startDate = null, DateTime? endDate = null, Guid? accountManager = null)
         {
             string serverResponse = "";
 
-            var percentage = SalesReportService.GetPercentageOfTypeOfActivity(out serverResponse, startDate, endDate);
+            var percentage = SalesReportService.GetPercentageOfTypeOfActivity(out serverResponse, startDate, endDate, accountManager);
 
             return Json(new { percentage = percentage });
         }

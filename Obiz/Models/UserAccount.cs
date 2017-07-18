@@ -27,5 +27,9 @@ namespace Obiz.Models
         public string AgentCode3 { get; set; }
         public string PartnerAgent { get; set; }
         public string CebBizPartner { get; set; }
+        public string DepartmentHead { get; set; }
+        public string Email { get; set; }
+        public string ClientMagicLogin { get; set; }
+        public string Type { get; set; }
     }
 }

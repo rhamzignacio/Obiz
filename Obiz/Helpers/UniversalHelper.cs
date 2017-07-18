@@ -82,7 +82,13 @@ namespace Obiz
                                         MiddleInitial = u.MiddleInitial,
                                         Status = u.Status,
                                         ID = u.ID,
-                                        Department = u.Department
+                                        Department = u.Department,
+                                        DepartmentHead = u.DepartmentHead,
+                                        AgentCode1 = u.AgentCode1,
+                                        AgentCode2 = u.AgentCode2,
+                                        AgentCode3 = u.AgentCode3,
+                                        PartnerAgent = u.PartnerAgent,
+                                        CebBizPartner = u.CebBizPartner
                                     };
 
                         user = query.FirstOrDefault();

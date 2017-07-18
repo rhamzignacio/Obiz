@@ -36,13 +36,35 @@
         growl.error(message, {title: "Error!", ttl: 3000});
     }
 
+    $scope.DepartmentDropDown = [
+        { value: "AC", label: "Accounting" },
+        { value: "AM", label: "Account Management" },
+        { value: "BL", label: "Business & Leisure" },
+        { value: "DC", label: "Documentation" },
+        { value: "IT", label: "Information Technology" },
+        { value: "MM", label: "Marine" },
+        { value: "MI", label: "Mice" },
+        { value: "MG", label: "Mancom" },
+        { value: "EC", label: "ExCom" }
+    ];
+
+    $scope.DepartmentHeadDropDown = [
+        { value: "Y", label: "Yes" },
+        { value: "N", label: "No" }
+    ];
+
+    $scope.PriviledgeDropDown = [
+        { value: "Y", label: "Yes" },
+        { value: "N", label: "No" }
+    ];
+
     $scope.initUser = function () {
         $http({
             method: "POST",
             url: "/Admin/GetUsers",
             arguments: { "Content-Type": "application/json" }
         }).then(function (data) {
-            if (data.data.message == "") {
+            if (data.data.message === "") {
                 vm.Users = data.data.users;
             }
             else {
@@ -51,4 +73,45 @@
         });
     }
 
+    $scope.SaveUser = function (value) {
+        $http({
+            method: "POST",
+            url: "/Admin/Save",
+            data: { user: value }
+        }).then(function (data) {
+            if (data.data === "") {
+                SuccessMessage("Sucessfully Saved");
+            }
+            else {
+                ErrorMessage(data.data);
+            }
+        });
+    }
+
+    $scope.Redirection = function (ID) {
+        window.location = "/Admin/OpenUserAccount?ID=" + ID;
+    }
+
+    $scope.GetSelectedUser = function () {
+        var ID = "";
+
+        if (window.location.href.indexOf('=') > 0) {
+            ID = window.location.href.substr(window.location.href.indexOf('=') + 1, 36);
+        }
+
+        if (ID != "") {
+            $http({
+                method: "POST",
+                url: "/Admin/GetSelectedUser",
+                data: { ID: ID }
+            }).then(function (data) {
+                if (data.data.errorMessage === "") {
+                    vm.UserAccount = data.data.user;
+                }
+                else {
+                    ErrorMessage(data.data.errorMessage);
+                }
+            });
+        }
+    }
 }])

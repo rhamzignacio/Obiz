@@ -5,6 +5,20 @@ using System.Web;
 
 namespace Obiz.Models
 {
+    public class SalesReportAttachmentModel
+    {
+        public Guid ID { get; set; }
+        public Guid? SalesID { get; set; }
+        public string FileName { get; set; }
+        public string Path { get; set; }
+        public string Extension { get; set; }
+        public string FileSize { get; set; }
+        public Guid? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
+        public string Status { get; set; }
+        public string ShowModifiedBy { get; set; }
+    }
+
     public class ClientCountModel
     {
         public string ClietName { get; set; }

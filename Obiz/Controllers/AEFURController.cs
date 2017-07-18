@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Obiz.Services;
+using Obiz.Models;
 
 namespace Obiz.Controllers
 {
@@ -29,6 +30,21 @@ namespace Obiz.Controllers
             return View();
         }
 
+        public ActionResult BillerDashBoard()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult InitBillerDashBoard()
+        {
+            string serverResponse = "";
+
+            var biller = AEFURService.GetBillerDashboard(out serverResponse);
+
+            return Json(new { biller = biller, errorMessage = serverResponse });
+        }
+
         [HttpPost]
         public JsonResult GetAEFURUnbilledReport()
         {
@@ -44,9 +60,28 @@ namespace Obiz.Controllers
         {
             string serverResponse = "";
 
-            var unbilled = AEFURService.GetUnbilledPerTC(out serverResponse);
+            List<AEFURUnbilledModel> unbilled = new List<AEFURUnbilledModel>();
 
-            var noRecord = AEFURService.GetNoRecordPerTC(out serverResponse);
+            List<AEFURNoRecordModel> noRecord = new List<AEFURNoRecordModel>();
+
+            if (UniversalHelper.CurrentUser.DepartmentHead == "N")
+            {
+                unbilled = AEFURService.GetUnbilledPerTC(out serverResponse);
+
+                noRecord = AEFURService.GetNoRecordPerTC(out serverResponse);
+            }
+            else if(UniversalHelper.CurrentUser.DepartmentHead == "A")
+            {
+                unbilled = AEFURService.GetAllUnbilled(out serverResponse);
+
+                noRecord = AEFURService.GetNoRecordPerTC(out serverResponse);
+            }
+            else if(UniversalHelper.CurrentUser.DepartmentHead == "Y")
+            {
+                unbilled = AEFURService.GetUnbilledPerDepartment(out serverResponse);
+
+                noRecord = AEFURService.GetNoRecordPerTC(out serverResponse);
+            }
 
             return Json(new { unbilled = unbilled, noRecord = noRecord, errorMessage = serverResponse });
         }

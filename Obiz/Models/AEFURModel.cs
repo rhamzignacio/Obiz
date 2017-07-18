@@ -62,6 +62,7 @@ namespace Obiz.Models
         public DateTime? InvoiceDate { get; set; }
         public string ProfileName { get; set; }
         public string BookingAgentNumber { get; set; }
+        public string BookingAgent { get; set; }
         public string PassengerName { get; set; }
         public decimal? GrossAmount { get; set; }
         public string RecordLocator { get; set; }
@@ -72,5 +73,21 @@ namespace Obiz.Models
         public string AirlineCode { get; set; }
         public string Itinerary { get; set; }
         public string Status { get; set; }
+    }
+
+    public class BillerDashboardHeadModel
+    {
+        public string Username { get; set; }
+        public List<BillerDashboardItemModel> Invoices { get; set; }
+    }
+
+    public class BillerDashboardItemModel
+    {
+        public string RecordLocator { get; set; }
+        public string ClientName { get; set; }
+        public decimal? AddedBy { get; set; }
+        public string BillerName { get; set; }
+        public DateTime? InvoiceDate { get; set; }
+        public string Username { get; set; }
     }
 }

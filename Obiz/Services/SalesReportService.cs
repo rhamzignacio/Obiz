@@ -9,8 +9,70 @@ namespace Obiz.Services
 {
     public class SalesReportService
     {
+        public static List<SalesReportAttachmentModel> GetAttachments (Guid SalesID, out string message)
+        {
+            try
+            {
+                message = "";
+
+                using(var db = new ObizEntities())
+                {
+                    var query = from a in db.SalesReportAttachment
+                                join u in db.UserAccount on a.ModifiedBy equals u.ID into qU
+                                from user in qU.DefaultIfEmpty()
+                                where a.SalesReportID == SalesID
+                                select new SalesReportAttachmentModel
+                                {
+                                    ID = a.ID,
+                                    Extension = a.Extension,
+                                    FileName = a.FileName,
+                                    FileSize = a.FileSize,
+                                    Path = a.Path,
+                                    Status = "Y",
+                                    ModifiedBy = a.ModifiedBy,
+                                    ShowModifiedBy = user.FirstName + " " + user.LastName,
+                                    ModifiedDate = a.ModifiedDate,
+                                    SalesID = a.SalesReportID
+                                };
+
+                    return query.ToList();
+                }
+            }
+            catch(Exception error)
+            {
+                message = error.Message;
+
+                return null;
+            }
+        }
+
+        public static void DeleteAttachments(SalesReportAttachmentModel item, out string message)
+        {
+            try
+            {
+                message = "";
+
+                using (var db = new ObizEntities())
+                {
+                    if(item.Status == "X")
+                    {
+                        var file = db.SalesReportAttachment.FirstOrDefault(r => r.ID == item.ID);
+
+                        if (file != null)
+                            db.Entry(file).State = EntityState.Deleted;
+                    }
+
+                    db.SaveChanges();
+                }
+            }
+            catch(Exception error)
+            {
+                message = error.Message;
+            }
+        }
+
         public static List<TopClientReportModel> GetTop10Clients (out string message, DateTime? startDate = null,
-            DateTime? endDate = null)
+            DateTime? endDate = null, Guid? accountManager = null)
         {
             try
             {
@@ -33,12 +95,21 @@ namespace Obiz.Services
                     clt.ForEach(item =>
                     {
                         var sales = db.SalesReport.Where(r => r.ClientID == item.ID && r.Date >= startDate
-                            && r.Date <= endDate).Count();
+                            && r.Date <= endDate);
+
+                        int salesCount = sales.Count();
+
+                        if(accountManager != null)
+                        {
+                            sales = sales.Where(r => r.UserID == accountManager);
+
+                            salesCount = sales.Count();
+                        }
 
                         ClientCountModel temp = new ClientCountModel
                         {
                             ClietName = item.ClientName,
-                            Count = sales
+                            Count = salesCount
                         };
 
                         clientList.Add(temp);
@@ -70,7 +141,7 @@ namespace Obiz.Services
         }
 
         public static PercentageOfTypeOfActivty GetPercentageOfTypeOfActivity(out string message, DateTime? startDate = null,
-            DateTime? endDate = null)
+            DateTime? endDate = null, Guid? accountManager = null)
         {
             try
             {
@@ -92,6 +163,9 @@ namespace Obiz.Services
                     {
                         var activityCount = db.SalesReport.Where(r => r.TypeOfActivity == item && r.Date >= startDate
                             && r.Date <= endDate);
+
+                        if (accountManager != null)
+                            activityCount = activityCount.Where(r => r.UserID == accountManager);
 
                         pOfActivity.Count.Add(activityCount.Count());
                     });

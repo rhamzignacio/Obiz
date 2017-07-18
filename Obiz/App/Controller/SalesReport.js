@@ -183,6 +183,8 @@
         $scope.initReport();
 
         $scope.initTypeOfActivity();
+
+        getDropDown();
     }
 
     $scope.SearchDashboard = function (value) {
@@ -371,7 +373,9 @@
             url: "/SalesReport/GetPercentageOfTypeOfActivity",
             data: {
                 startDate: value.StartDate,
-                endDate: value.EndDate},
+                endDate: value.EndDate,
+                accountManager: value.AccountManager
+            },
             arguments: { "Content-Type": "application/json" }
         }).then(function (data) {
             vm.PercentageTypeActivity = data.data.percentage;
@@ -522,7 +526,8 @@
             url: "/SalesReport/GetTop10Clients",
             data: {
                 startDate: value.StartDate,
-                endDate: value.EndDate
+                endDate: value.EndDate,
+                accountManager: value.AccountManager
             }
         }).then(function (data) {
             vm.TopClients = data.data.top;

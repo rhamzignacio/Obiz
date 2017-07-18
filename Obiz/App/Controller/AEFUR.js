@@ -79,6 +79,21 @@
         });
     }
 
+    $scope.InitBillerDashboard = function () {
+        $http({
+            method: "POST",
+            url: "/AEFUR/InitBillerDashBoard",
+            arguments: { "Content-Type": "application/json" }
+        }).then(function (data) {
+            if (data.data.errorMessage === "") {
+                vm.Billers = data.data.biller;
+            }
+            else {
+                ErrorMessage(data.data.errorMessage);
+            }
+        });
+    }
+
     $scope.AssignForDelete = function (value) {
         vm.ForDelete = value;
     }

@@ -29,5 +29,6 @@ namespace Obiz.Models
         public virtual DbSet<AEFURUnbilledCount> AEFURUnbilledCount { get; set; }
         public virtual DbSet<AEFURProductivityCount> AEFURProductivityCount { get; set; }
         public virtual DbSet<AEFURUnbilled> AEFURUnbilled { get; set; }
+        public virtual DbSet<ObizAccountingInvoiceCount> ObizAccountingInvoiceCount { get; set; }
     }
 }

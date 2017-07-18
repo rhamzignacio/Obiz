@@ -9,6 +9,53 @@ namespace Obiz.Services
 {
     public class AEFURService
     {
+        public static List<BillerDashboardHeadModel> GetBillerDashboard(out string message)
+        {
+            try
+            {
+                message = "";
+
+                using (var obizDB = new ObizEntities())
+                using (var travDB = new TravComEntities())
+                {
+                    var userQuery = from u in obizDB.UserAccount
+                               where u.Type == "Biller"
+                               select new BillerDashboardHeadModel
+                               {
+                                   Username = u.Username,
+                                   Invoices = new List<BillerDashboardItemModel>()
+                               };
+
+                    var user = userQuery.ToList();
+
+                    user.ForEach(item =>
+                    {
+                        var itemQuery = from o in travDB.ObizAccountingInvoiceCount
+                                        where o.Login.ToUpper() == item.Username.ToUpper()
+                                        select new BillerDashboardItemModel
+                                        {
+                                            AddedBy = o.AddedBy,
+                                            BillerName = o.UserName,
+                                            ClientName = o.ProfileName,
+                                            InvoiceDate = o.InvoiceDate,
+                                            RecordLocator = o.RecordLocator,
+                                            Username = o.Login
+                                        };
+
+                        item.Invoices.AddRange(itemQuery.ToList());
+                    });
+
+                    return user;
+                }
+            }
+            catch(Exception error)
+            {
+                message = error.Message;
+
+                return null;
+            }
+        }
+
         public static AEFURUnbilledReport GetAEFURUnbilledReport(out string message)
         {
             try
@@ -19,6 +66,7 @@ namespace Obiz.Services
                 using (var travDB = new TravComEntities())
                 {
                     var unbilled = travDB.AEFURUnbilledCount.ToList();
+
                     var user = obizDB.UserAccount.Where(r=>r.Department == "BL" || r.Department == "MM" || r.Department == "MC").OrderBy(r=>r.FirstName).ToList();
 
                    AEFURUnbilledReport unbilledList = new AEFURUnbilledReport();
@@ -166,6 +214,124 @@ namespace Obiz.Services
             }
         }
 
+        public static List<AEFURUnbilledModel> GetAllUnbilled(out string message)
+        {
+            try
+            {
+                message = "";
+
+                List<AEFURUnbilledModel> unbilledList = new List<AEFURUnbilledModel>();
+
+                var date = DateTime.Now.AddMonths(-10);
+
+                using (var travDB = new TravComEntities())
+                {
+                    var unbilled = from u in travDB.AEFURUnbilled
+                                   where u.BookingAgentNumber != "" && u.BookingAgentNumber != null && u.TransactionDate >= date
+                                   select new AEFURUnbilledModel
+                                   {
+                                       BookingDate = u.BookingDate,
+                                       TicketingAgent = u.TicketingAgent,
+                                       InvoiceID = u.InvoiceID,
+                                       InvoiceDetailID = u.InvoiceDetailID,
+                                       CurrencyCode = u.CurrencyCode,
+                                       TransactionDate = u.TransactionDate,
+                                       VendorNumber = u.VendorNumber,
+                                       InvoiceNumber = u.InvoiceNumber,
+                                       TicketNumber = u.TicketNumber,
+                                       TransactionType = u.TransactionType,
+                                       InvoiceDate = u.InvoiceDate,
+                                       ProfileName = u.ProfileName,
+                                       BookingAgentNumber = u.BookingAgentNumber,
+                                       PassengerName = u.PassengerName,
+                                       GrossAmount = u.GrossAmount,
+                                       RecordLocator = u.RecordLocator,
+                                       FullName = u.FullName,
+                                       FreeFieldA = u.FreeFieldA,
+                                       Department = u.Department,
+                                       TicketingAgentNumber = u.TicketingAgentNumber,
+                                       Status = "Y",
+                                       BookingAgent = u.BookingAgentName
+                                   };
+
+                    return unbilled.OrderByDescending(r=>r.TransactionDate).ThenBy(r=>r.RecordLocator).ToList().GetRange(0,2000);
+                }
+            }
+            catch (Exception error)
+            {
+                message = error.Message;
+
+                return null;
+            }
+        }
+
+        public static List<AEFURUnbilledModel> GetUnbilledPerDepartment(out string message)
+        {
+            message = "";
+
+            try
+            {
+                List<AEFURUnbilledModel> unbilledList = new List<AEFURUnbilledModel>();
+
+                using (var obizDB = new ObizEntities())
+                {
+
+                    using (var travDB = new TravComEntities())
+                    {
+                        var user = obizDB.UserAccount.Where(r => r.Department == UniversalHelper.CurrentUser.Department).ToList();
+
+                        var unbilled = travDB.AEFURUnbilled.ToList();
+
+                        var date = DateTime.Now.AddMonths(-10);
+
+                        user.ForEach(item =>
+                        {
+                            var temp = from u in travDB.AEFURUnbilled
+                                       where (u.BookingAgentNumber == item.AgentCode1 || u.BookingAgentNumber == item.AgentCode2
+                                        || u.BookingAgentNumber == item.AgentCode3) && u.BookingAgentNumber != "" &&
+                                        (u.TransactionDate >= date)
+                                       select new AEFURUnbilledModel
+                                       {
+                                           BookingDate = u.BookingDate,
+                                           TicketingAgent = u.TicketingAgent,
+                                           InvoiceID = u.InvoiceID,
+                                           InvoiceDetailID = u.InvoiceDetailID,
+                                           CurrencyCode = u.CurrencyCode,
+                                           TransactionDate = u.TransactionDate,
+                                           VendorNumber = u.VendorNumber,
+                                           InvoiceNumber = u.InvoiceNumber,
+                                           TicketNumber = u.TicketNumber,
+                                           TransactionType = u.TransactionType,
+                                           InvoiceDate = u.InvoiceDate,
+                                           ProfileName = u.ProfileName,
+                                           BookingAgentNumber = u.BookingAgentNumber,
+                                           PassengerName = u.PassengerName,
+                                           GrossAmount = u.GrossAmount,
+                                           RecordLocator = u.RecordLocator,
+                                           FullName = u.FullName,
+                                           FreeFieldA = u.FreeFieldA,
+                                           Department = u.Department,
+                                           TicketingAgentNumber = u.TicketingAgentNumber,
+                                           Status = "Y",
+                                           BookingAgent = u.BookingAgentName
+                                       };
+
+                            unbilledList.AddRange(temp.ToList());
+                        });
+
+                        return unbilledList.OrderBy(r=> r.TransactionDate).ThenBy(r=>r.RecordLocator).ToList();
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                message = error.Message;
+
+                return null;
+            }
+        }
+
+
         public static List<AEFURUnbilledModel> GetUnbilledPerTC (out string message)
         {
             message = "";
@@ -204,7 +370,7 @@ namespace Obiz.Services
                                         Department = u.Department,
                                         TicketingAgentNumber = u.TicketingAgentNumber,
                                         Status = "Y",
-                                        
+                                        BookingAgent = u.BookingAgentName
                                     };
 
                         return query.GroupBy(x=> new { x.TicketNumber, x.RecordLocator }).Select(x=>x.FirstOrDefault()).ToList();
