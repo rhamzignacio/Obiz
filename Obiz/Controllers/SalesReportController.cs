@@ -212,6 +212,8 @@ namespace Obiz.Controllers
         {
             string serverResponse = "";
 
+            string temp = "";
+
             Guid ID = Guid.Empty;
 
             if (salesReport != null)
@@ -222,7 +224,7 @@ namespace Obiz.Controllers
                 {
                     salesReport.Attachments.ForEach(item =>
                     {
-                        SalesReportService.SaveAttachments(ID, item, out serverResponse);
+                        SalesReportService.SaveAttachments(ID, item, out temp);
                     });
                 }
             }
