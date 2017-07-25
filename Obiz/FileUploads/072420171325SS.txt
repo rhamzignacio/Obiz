@@ -1,0 +1,24 @@
+Statement of Accounts - Preview and Kiosk
+ - New format, total all fees in one form
+ - follow break down format
+
+
+**KIOSK**
+
+Bills and Payments button *PER UNIT
+ - Payment History
+format: 	BILL DATE | DESCRIPTION | PAYMENT DATE | OR NUMBER | AMOUNT
+									
+								_______________
+								  TOTAL AMOUNT	
+ - Unsettled Charges
+format: 	BILL DATE | DESCRIPTION | PAYMENT DATE | REF NUMBER | BALANCE
+									
+								_______________
+								  TOTAL AMOUNT
+
+
+** RESERVATION RECEIPT FORMAT AND STATEMENT OF ACCOUNTS WILL BE SENT THROUGH IMAGE
+
+
+=FormatDateTime(Fields!DateOfFuntion.Value, DateFormat.ShortDate)

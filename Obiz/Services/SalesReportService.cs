@@ -9,6 +9,37 @@ namespace Obiz.Services
 {
     public class SalesReportService
     {
+        public static void SaveAttachments(Guid SalesID, SalesReportAttachmentModel attachment, out string message)
+        {
+            try
+            {
+                message = "";
+
+                using (var db = new ObizEntities())
+                {
+                    SalesReportAttachment newAttachment = new SalesReportAttachment
+                    {
+                        ID = Guid.NewGuid(),
+                        SalesReportID = SalesID,
+                        Extension = attachment.Extension,
+                        FileName = attachment.FileName,
+                        FileSize = attachment.FileSize,
+                        ModifiedBy = UniversalHelper.CurrentUser.ID,
+                        ModifiedDate = DateTime.Now,
+                        Path = attachment.Path
+                    };
+
+                    db.Entry(newAttachment).State = EntityState.Added;
+
+                    db.SaveChanges();
+                }
+            }
+            catch(Exception error)
+            {
+                message = error.Message;
+            }
+        }
+
         public static List<SalesReportAttachmentModel> GetAttachments (Guid SalesID, out string message)
         {
             try
@@ -268,8 +299,12 @@ namespace Obiz.Services
                                     ShowModifiedBy = modifiedBy.FirstName + " " + modifiedBy.LastName,
                                     SLA = obSales.SLA
                                 };
+
+                    var temp = query.FirstOrDefault();
+
+                    temp.FileUploaded = GetAttachments(temp.ID, out message);
   
-                    return query.FirstOrDefault();
+                    return temp;
                 }
 
             }
@@ -281,7 +316,7 @@ namespace Obiz.Services
             }
         }
 
-        public static void SaveSalesReport(SalesReportModel sales, out string message)
+        public static void SaveSalesReport(SalesReportModel sales, out string message, out Guid ID)
         {
             try
             {
@@ -294,6 +329,8 @@ namespace Obiz.Services
                     if(sale != null)
                     {
                         message = "Updated";
+
+                        ID = sales.ID;
 
                         sale.Date = sales.Date;
                         sale.DueDate = sales.DueDate;
@@ -317,9 +354,11 @@ namespace Obiz.Services
                     {
                         message = "Saved";
 
+                        ID = new Guid();
+
                         SalesReport newSalesReport = new SalesReport
                         {
-                            ID = Guid.NewGuid(),
+                            ID = ID,
                             Date = sales.Date,
                             DueDate = sales.DueDate,
                             AgendaIssueConcerns = sales.AgendaIssueConcerns,
@@ -346,6 +385,8 @@ namespace Obiz.Services
             catch(Exception error)
             {
                 message = error.Message;
+
+                ID = Guid.Empty;
             }
         }
 

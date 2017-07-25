@@ -47,7 +47,7 @@ namespace Obiz.Controllers
         }
 
         [HttpPost]
-        public JsonResult FileUpload(Guid SalesID)
+        public JsonResult FileUpload()
         {
             var httpRequest = System.Web.HttpContext.Current.Request;
 
@@ -58,6 +58,8 @@ namespace Obiz.Controllers
             string newFileName = "";
 
             string ext = "";
+
+            List<SalesReportAttachmentModel> returnList = new List<SalesReportAttachmentModel>();
 
             if(httpRequest.Files.Count > 0)
             {
@@ -75,10 +77,8 @@ namespace Obiz.Controllers
 
                     using(var db = new ObizEntities())
                     {
-                        SalesReportAttachment newAttachment = new SalesReportAttachment
+                        SalesReportAttachmentModel newAttachment = new SalesReportAttachmentModel
                         {
-                            ID = Guid.NewGuid(),
-                            SalesReportID = SalesID,
                             FileName = postedFile.FileName,
                             FileSize = (postedFile.ContentLength / 1024).ToString(),
                             Extension = ext,
@@ -87,14 +87,28 @@ namespace Obiz.Controllers
                             ModifiedDate = DateTime.Now
                         };
 
-                        db.Entry(newAttachment).State = System.Data.Entity.EntityState.Added;
-
-                        db.SaveChanges();
+                        returnList.Add(newAttachment);
                     }
                 }
             }
 
-            return Json("");
+
+            return Json(new { uploadedFiles = returnList });
+        }
+
+        [HttpPost]
+        public JsonResult DeleteAttachment(SalesReportAttachmentModel file)
+        {
+            string serverResponse = "";
+
+            if (file != null)
+            {
+                file.Status = "X";
+
+                SalesReportService.DeleteAttachments(file, out serverResponse);
+            }
+
+            return Json(serverResponse);
         }
 
         [HttpPost]
@@ -176,7 +190,7 @@ namespace Obiz.Controllers
 
             var priviledge = UniversalService.GetPriviledge("SalesReport" ,out serverResponse);
 
-            return Json(new { salesReport = salesReport, priviledge = priviledge });
+            return Json(new { salesReport = salesReport, priviledge = priviledge});
         }
 
         [HttpPost]
@@ -198,10 +212,23 @@ namespace Obiz.Controllers
         {
             string serverResponse = "";
 
-            if(salesReport != null)
-                SalesReportService.SaveSalesReport(salesReport, out serverResponse);
+            Guid ID = Guid.Empty;
 
-            return Json(serverResponse);
+            if (salesReport != null)
+            {
+                SalesReportService.SaveSalesReport(salesReport, out serverResponse, out ID);
+
+                if(salesReport.Attachments != null)
+                {
+                    salesReport.Attachments.ForEach(item =>
+                    {
+                        SalesReportService.SaveAttachments(ID, item, out serverResponse);
+                    });
+                }
+            }
+
+
+            return Json(new { message = serverResponse, ID = ID });
         }
 
     }

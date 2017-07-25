@@ -1,4 +1,4 @@
-﻿angular.module("salesReport", [])
+﻿angular.module("salesReport", ["ngFileUpload"])
 
     .directive('onFinishRenderSales', function () {
         return {
@@ -27,7 +27,7 @@
         }
     })
 
-.controller("salesReportController", ['$scope', '$location', '$http', 'growl' ,function ($scope, $location, $http, growl) {
+.controller("salesReportController", ['$scope', '$location', '$http', 'growl', 'Upload' ,function ($scope, $location, $http, growl, Upload) {
     var vm = this;
 
     ClearVMSalesReport = function () {
@@ -626,10 +626,82 @@
                 url: "/SalesReport/SaveSalesReport",
                 data: { salesReport: value }
             }).then(function (data) {
-                if (data.data == "Updated" || data.data == "Saved") {
-                    SuccessMessage(data.data);
+                if (data.data.message == "Updated" || data.data.message == "Saved") {
+                    SuccessMessage(data.data.message);
                 }
             });
         }
+    }
+
+    //uploading
+    UploadFile = function (file) {
+        if (file.Status != "X") {
+            file.upload = Upload.upload({
+                url: "/SalesReport/FileUpload",
+                data: { file: file },
+                async: true
+            }).then(function (data) {
+                vm.Attachments = data.data.uploadedFiles;
+            });
+        }
+    }
+
+    $scope.uploadFiles = function (files, errFiles) {
+
+        angular.forEach(files, function (file) {
+            if (file.size >= 25600000) {
+                growl.error("Maximum file upload is 25MB", { title: "Error!", ttl: 3000 });
+            }
+            else {
+                file.Upload = Upload.upload({
+                    url: "/SalesReport/FileUpload",
+                    data: { file: file },
+                    async: true
+                }).then(function (data) {
+                    growl.success("Successfully uploaded", { ttl: 2000 });
+
+                    if (vm.SalesReport.Attachments == null) {
+                        vm.SalesReport.Attachments = data.data.uploadedFiles;
+                    }
+                    else {
+                        angular.forEach(data.data.uploadedFiles, function (f) {
+                            vm.SalesReport.Attachments.push(f);
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    $scope.uploadClick = function () {
+        $("#Files").click();
+    }
+
+    $scope.AssignFileToDelete = function (value) {
+        vm.FileDelete = value;
+    }
+
+    $scope.DeleteForUpload = function (value) {
+        value.Status = "X";
+    }
+
+    $scope.DeleteFile = function () {
+        $http({
+            method: "POST",
+            url: "/SalesReport/DeleteAttachment",
+            data: { file: vm.FileDelete },
+            async: true
+        }).then(function (data) {
+            if (data.data == "") {
+                growl.success("Successfully deleted", { ttl: 2000 });
+
+                $scope.initSalesReport();
+
+                $("#deleteFileModal").modal("hide");
+            }
+            else {
+                growl.error(data.data, { title: "Error!", ttl: 3000 });
+            }
+        });
     }
 }])

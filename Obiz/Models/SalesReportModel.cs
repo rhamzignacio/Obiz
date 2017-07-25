@@ -104,6 +104,8 @@ namespace Obiz.Models
         public Guid? ClientID { get; set; }
         public DateTime? Date { get; set; }
         public string ShowDate { get; set; }
+        public List<SalesReportAttachmentModel> Attachments { get; set; }
+        public List<SalesReportAttachmentModel> FileUploaded { get; set; }
         public string TypeOfActivity { get; set; }
         public string ShowTypeOfActivity
         {

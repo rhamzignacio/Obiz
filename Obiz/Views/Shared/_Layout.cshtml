@@ -35,16 +35,16 @@
             <li><a href="/Home/Dashboard"><i class="icon icon-home"></i> <span>Dashboard</span></a></li>
             <li ng-show="vm.Menu.ActivityReport == 'Y' || vm.CurrentUser.Department == 'IT'"><a href="/SalesReport/Index"><i class="icon icon-th"></i> <span>Activity Report</span></a></li>
             @*<li><a href="/ServiceIssueLog/Index"><i class="icon icon-exclamation-sign"></i><span>Service Issue Log</span></a></li>*@
-            <li class="submenu" ng-show="vm.Menu.AEFUR == 'Y' || vm.CurrentUser.Department == 'IT'"><a href="#"><i class="icon icon-plane"></i><span>AEFUR</span></a>
+            @*<li class="submenu" ng-show="vm.Menu.AEFUR == 'Y' || vm.CurrentUser.Department == 'IT'"><a href="#"><i class="icon icon-plane"></i><span>AEFUR</span></a>
                 <ul>
                     <li><a href="/AEFUR/UnbilledMonitoring"><span>Unbilled Monitoring</span></a></li>
                 </ul>
-            </li>
+            </li>*@
             <li class="submenu" ng-show="vm.Menu.Report == 'Y' || vm.CurrentUser.Department == 'IT'"><a href="#"><i class="icon icon-dashboard"></i><span>Reports</span></a>
                 <ul>
                     <li ng-show="vm.Menu.ActivityReportCharts == 'Y' || vm.CurrentUser.Department == 'IT'"><a href="/SalesReport/Dashboard">Activity Report</a></li>
                     @*<li><a href="/SalesReport/Dashboard"><span>Dashboard</span></a></li>*@
-                     <li><a href="/AEFUR/ReportMenu">AEFUR</a></li>
+                     @*<li><a href="/AEFUR/ReportMenu">AEFUR</a></li>*@
                 </ul>
             </li>
             <li ng-show="vm.CurrentUser.Department == 'IT'"><a href="/Admin/UserAccount"><i class="icon icon-group"></i> <span>Users</span></a></li>
@@ -63,7 +63,7 @@
 
         <!--Footer-part-->
         <div class="row-fluid">
-            <div id="footer" class="span12"> 2017 &copy; Obiz v1.5 by Philscan Travel and Tours Inc.</div>
+            <div id="footer" class="span12"> 2017 &copy; Obiz v1.6 by Philscan Travel and Tours Inc.</div>
         </div>
 
         <!--end-Footer-part-->

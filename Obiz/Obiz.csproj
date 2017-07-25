@@ -2730,6 +2730,8 @@
     <Content Include="Content\angular-1.6.0\i18n\angular-locale_zu-za.js" />
     <Content Include="Content\angular-1.6.0\i18n\angular-locale_zu.js" />
     <Content Include="Content\angular-1.6.0\version.txt" />
+    <Content Include="Content\angular-file-upload.js" />
+    <Content Include="Content\angular-multiple-file-upload.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\chart\chart.js" />

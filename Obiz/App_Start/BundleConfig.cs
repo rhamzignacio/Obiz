@@ -46,7 +46,8 @@ namespace Obiz
                 "~/Content/js/angular-growl.min.js",
                 "~/Content/js/wysihtml5-0.3.0.js",
                // "~/Content/js/jquery.uniform.js",
-                "~/Content/js/jquery.dataTables.js"
+                "~/Content/js/jquery.dataTables.js",
+                "~/Content/angular-file-upload.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
