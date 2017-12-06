@@ -326,7 +326,7 @@ namespace Obiz.Services
                 {
                     var sale = db.SalesReport.FirstOrDefault(r => r.ID == sales.ID);
 
-                    if(sale != null)
+                    if(sale != null && sale.ID != Guid.Empty)
                     {
                         message = "Updated";
 
@@ -358,7 +358,7 @@ namespace Obiz.Services
 
                         SalesReport newSalesReport = new SalesReport
                         {
-                            ID = ID,
+                            ID = Guid.NewGuid(),
                             Date = sales.Date,
                             DueDate = sales.DueDate,
                             AgendaIssueConcerns = sales.AgendaIssueConcerns,
@@ -400,10 +400,10 @@ namespace Obiz.Services
                 message = "";
 
                 if (startDate == null)
-                    startDate = DateTime.Now.AddMonths(-2);
+                    startDate = DateTime.Now.AddMonths(-4);
 
                 if (endDate == null)
-                    endDate = DateTime.Now;
+                    endDate = DateTime.Now.AddYears(2);
 
                 using (var dbObiz = new ObizEntities())
                 {
@@ -414,7 +414,7 @@ namespace Obiz.Services
                                     from createdBy in qCby.DefaultIfEmpty()
                                     join mby in dbObiz.UserAccount on obSales.ModifiedBy equals mby.ID into qMby
                                     from modifiedBy in qMby.DefaultIfEmpty()
-                                    where obSales.CreatedDate >= startDate && obSales.CreatedDate <= endDate
+                                    where obSales.Date >= startDate && obSales.Date <= endDate
                                     select new SalesReportModel
                                     {
                                         ID = obSales.ID,

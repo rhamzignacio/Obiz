@@ -9,16 +9,6 @@
 <div class="container-fluid" ng-controller="salesReportController as rpt" ng-init="initSalesReport()">
     <h3>Activity Report</h3>
 
-    <button type="button" class="btn btn-success" style="width:120px;" ng-click="SaveSales(rpt.SalesReport)"
-            ng-show="(vm.CurrentUser.ID == rpt.SalesReport.CreatedBy && rpt.SalesReport.Priviledge.Edit == 'Y' && rpt.SalesReport.ID != '')
-                            || rpt.SalesReport.Priviledge.Override == 'Y'
-                            || (rpt.SalesReport.Priviledge.ShowAdd == 'Y' && rpt.SalesReport.ID == '')">
-        <span ng-show="rpt.SalesReport.ID == null || rpt.SalesReport.ID == ''">Save</span>
-        <span ng-show="rpt.SalesReport.ID != null && rpt.SalesReport.ID != ''">Update</span>
-    </button>
-
-    <a type="button" class="btn btn-warning" style="width:100px;" href="/SalesReport/Index">Back to List</a>
-
     <div class="form-group">
         <label>Account Manager</label>
         <select class="form-control select2_single" id="AccountManager" style="width:100%" ng-model="rpt.SalesReport.UserID" ng-options="item.ID as item.FullName for item in rpt.AccountManagerDropDown"></select>
@@ -112,6 +102,18 @@
             <a href="#">{{file.FileName}} - {{file.FileSize}}Bytes</a>
         </div>
     </div>
+    <br />
+
+    <button id="saveBtn" type="button" class="btn btn-success" style="width:120px;" ng-click="SaveSales(rpt.SalesReport)"
+            ng-show="(vm.CurrentUser.ID == rpt.SalesReport.CreatedBy && rpt.SalesReport.Priviledge.Edit == 'Y' && rpt.SalesReport.ID != '')
+                            || rpt.SalesReport.Priviledge.Override == 'Y'
+                            || (rpt.SalesReport.Priviledge.ShowAdd == 'Y' && rpt.SalesReport.ID == '')">
+        <span ng-show="rpt.SalesReport.ID == null || rpt.SalesReport.ID == ''">Save</span>
+        <span ng-show="rpt.SalesReport.ID != null && rpt.SalesReport.ID != ''">Update</span>
+    </button>
+
+    <a type="button" class="btn btn-warning" style="width:100px;" href="/SalesReport/Index">Back to List</a>
+
 
     <!--Delete File Modal-->
     <div class="modal fade" id="deleteFileModal" role="dialog">

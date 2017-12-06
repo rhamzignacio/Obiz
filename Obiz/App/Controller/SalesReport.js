@@ -628,6 +628,8 @@
             }).then(function (data) {
                 if (data.data.message == "Updated" || data.data.message == "Saved") {
                     SuccessMessage(data.data.message);
+
+                    $("#saveBtn").hide();
                 }
             });
         }
